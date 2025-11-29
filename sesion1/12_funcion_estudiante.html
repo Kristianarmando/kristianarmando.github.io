@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Función y Rol del Estudiante en Plataformas Virtuales de Aprendizaje</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1e40af;
+            --secondary: #3b82f6;
+            --accent: #10b981;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #6b7280;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(to bottom, #f0f9ff, #e0f2fe);
+            color: var(--dark);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.8rem;
+            margin: 0;
+            font-weight: 700;
+        }
+        header p {
+            font-size: 1.3rem;
+            max-width: 900px;
+            margin: 1rem auto 0;
+            opacity: 0.95;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        section {
+            margin-bottom: 4rem;
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        h2 {
+            color: var(--primary);
+            border-bottom: 3px solid var(--secondary);
+            padding-bottom: 0.5rem;
+            font-size: 2rem;
+        }
+        h3 {
+            color: var(--secondary);
+            font-size: 1.6rem;
+            margin-top: 2rem;
+        }
+        .quote {
+            background: #f0f9ff;
+            border-left: 6px solid var(--primary);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            font-size: 1.2rem;
+            border-radius: 0 8px 8px 0;
+        }
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .role-card {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #e2e8f0;
+        }
+        .role-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .role-card i {
+            font-size: 3.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        .highlight {
+            background: linear-gradient(120deg, #dcfce7 0%, #bbf7d0 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            border-left: 5px solid var(--accent);
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        ul li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 0.8rem;
+        }
+        ul li:before {
+            content: "✓";
+            color: var(--accent);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        footer {
+            text-align: center;
+            padding: 3rem;
+            background: var(--dark);
+            color: white;
+            margin-top: 4rem;
+        }
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.2rem; }
+            .roles-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Función y Rol del Estudiante<br>en Plataformas Virtuales de Aprendizaje</h1>
+    <p>Del receptor pasivo al sujeto activo, autónomo y éticamente responsable</p>
+</header>
+
+<div class="container">
+
+    <!-- Frase fuerza principal -->
+    <section class="quote">
+        <p><strong>En las plataformas virtuales educativas, el estudiante deja de ser un receptor pasivo de contenidos para convertirse en un sujeto activo, autogestor y éticamente responsable, cuyo rol se articula en la autodisciplina, el autoaprendizaje, el análisis crítico-reflexivo y el trabajo colaborativo, usando las TIC como mediadoras de procesos de aprendizaje más humanizantes.</strong></p>
+        <p style="text-align:right; margin-top:1rem; font-size:0.95rem; opacity:0.9;">— Síntesis conceptual (Rugeles et al., 2015; Susanti et al., 2023)</p>
+    </section>
+
+    <!-- 1. Cambio de paradigma -->
+    <section>
+        <h2>1. Cambio de Paradigma en el Rol del Estudiante</h2>
+        <p>Las TIC generan una nueva cultura educativa (Piscitelli, 2012):</p>
+        <ul>
+            <li>Sobreabundancia de información y ruptura del monopolio escolar sobre el conocimiento.</li>
+            <li>Aparición de nativos e inmigrantes digitales → necesidad de estrategias inclusivas y nivelación en competencias TIC.</li>
+            <li>El estudiante deja de ser receptor pasivo y se convierte en <strong>protagonista y autogestor</strong> de su aprendizaje (Rugeles et al., 2015).</li>
+        </ul>
+        <div class="highlight">
+            <strong>Escudero (1992):</strong> El estudiante virtual debe ser activo, autogestor, responsable del tiempo y los recursos, y capaz de actualizarse permanentemente en TIC.
+        </div>
+    </section>
+
+    <!-- 2. Los cuatro roles clave (Rugeles et al., 2015) -->
+    <section>
+        <h2>2. Los Cuatro Roles Clave del Estudiante Virtual</h2>
+        <div class="roles-grid">
+            <div class="role-card">
+                <i class="fas fa-calendar-check"></i>
+                <h3>Autodisciplina</h3>
+                <p>Organiza su tiempo, cumple metas sin supervisión constante, mantiene constancia y evita la procrastinación. Gestiona calendarios, fechas y progreso en la plataforma.</p>
+            </div>
+            <div class="role-card">
+                <i class="fas fa-search"></i>
+                <h3>Autoaprendizaje</h3>
+                <p>Decide ritmos, espacios y fuentes de consulta. Busca, compara y profundiza más allá de los materiales oficiales usando recursos externos.</p>
+            </div>
+            <div class="role-card">
+                <i class="fas fa-brain"></i>
+                <h3>Análisis Crítico y Reflexivo</h3>
+                <p>Razona, relaciona contenidos con la realidad, cuestiona éticamente y aporta argumentos propios en foros y debates.</p>
+            </div>
+            <div class="role-card">
+                <i class="fas fa-users"></i>
+                <h3>Trabajo Colaborativo</h3>
+                <p>Participa en wikis, proyectos grupales y herramientas síncronas/asíncronas. Aprende a negociar, repartir tareas y dar retroalimentación.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Roles desde la autonomía (Susanti et al., 2023) -->
+    <section>
+        <h2>3. Roles del Estudiante desde la Autonomía del Aprendiz</h2>
+        <ul>
+            <li><strong>Gestor de su propio aprendizaje</strong> – Toma decisiones sobre qué, cómo y cuándo aprender.</li>
+            <li><strong>Planificador y regulador</strong> – Define objetivos, monitorea progreso y ajusta estrategias.</li>
+            <li><strong>Auto-instructor</strong> – Actúa como “su propio profesor” y aclara dudas por iniciativa propia.</li>
+            <li><strong>Buscador y gestor de recursos</strong> – Construye su ecosistema digital de aprendizaje.</li>
+            <li><strong>Evaluador y aprendiz reflexivo</strong> – Practica metacognición y autoevaluación constante.</li>
+            <li><strong>Aprendiz motivado</strong> – Se mueve por metas internas más allá de la calificación.</li>
+            <li><strong>Colaborador interdependiente</strong> – Valora y participa activamente en el trabajo en grupo.</li>
+            <li><strong>Gestor del tiempo y del entorno en línea</strong> – Administra horarios y supera limitaciones técnicas.</li>
+        </ul>
+    </section>
+
+    <!-- 4. Importancia de la sincronicidad (Caprara & Caprara, 2022) -->
+    <section>
+        <h2>4. La Sincronicidad como Condición de Calidad y Cuidado</h2>
+        <div class="highlight">
+            <p>Los entornos virtuales de alta calidad priorizan la comunicación sincrónica estudiante–docente y estudiante–estudiante. No son solo repositorios de tareas, sino espacios vivos de interacción.</p>
+        </div>
+        <p>Beneficios clave de la enseñanza síncrona:</p>
+        <ul>
+            <li>Aumenta el compromiso y la sensación de comunidad.</li>
+            <li>Permite feedback inmediato y regulación del aprendizaje.</li>
+            <li>Visibiliza lenguaje corporal y presencia emocional.</li>
+            <li>Actúa como factor protector de la salud mental (mantiene rutinas, pertenencia y cuidado).</li>
+        </ul>
+    </section>
+
+    <!-- 5. Modelo de Pan (2023) -->
+    <section>
+        <h2>5. Entorno, Empoderamiento y Compromiso Conductual (Pan, 2023)</h2>
+        <p>Un entorno virtual favorable se compone de:</p>
+        <ul>
+            <li>Cooperación en el aula</li>
+            <li>Interacción constante</li>
+            <li>Adquisición estratégica de recursos</li>
+        </ul>
+        <p>Estos elementos → incrementan <strong>motivación</strong> y <strong>empoderamiento</strong> → lo que se traduce en mayor <strong>compromiso conductual</strong> (participación cooperativa + aprendizaje autodirigido).</p>
+    </section>
+
+    <!-- Conclusión -->
+    <section class="quote">
+        <p><strong>Conclusión:</strong> En la educación virtual contemporánea, el estudiante no es un simple usuario de la plataforma, sino un sujeto ético, autónomo y colaborativo que gestiona activamente su trayecto formativo, apoyado por entornos ricos en interacción sincrónica y recursos significativos.</p>
+    </section>
+
+</div>
+
+<footer>
+    <p>Marco conceptual elaborado a partir de Díaz-Becerro (2009), Rugeles et al. (2015), Susanti et al. (2023), Caprara & Caprara (2022) y Pan (2023)</p>
+    <p>© 2025 – Documento académico profesional</p>
+</footer>
+
+</body>
+</html>

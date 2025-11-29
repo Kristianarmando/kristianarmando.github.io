@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estándares en Plataformas Educativas – Técnico + Pedagógico</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap');
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.97);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    }
+    .header {
+      text-align: center;
+      font-size: 2.8em;
+      background: linear-gradient(45deg, #ff6b6b, #feca57);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+
+    /* Tarjetas flip */
+    .flip-card {
+      background-color: transparent;
+      width: 100%;
+      height: 340px;
+      perspective: 1000px;
+      margin: 30px 0;
+    }
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      transform-style: preserve-3d;
+      border-radius: 18px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+    }
+    .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 18px;
+      padding: 30px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .flip-card-front {
+      background: linear-gradient(135deg, #e0f7fa 0%, #fff0f5 100%);
+      color: #1a1a1a;
+    }
+    .flip-card-front h2, .flip-card-front h3 { color: #2c3e50; margin: 15px 0; }
+    .flip-card-back {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      transform: rotateY(180deg);
+    }
+    .flip-card-back h3 { color: #fff; margin-bottom: 20px; font-size: 1.5em; }
+    .flip-card-back ul {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(5px);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: left;
+      width: 90%;
+    }
+    .emoji { font-size: 4.5em; margin-bottom: 10px; }
+
+    /* Grid */
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 28px;
+      margin-top: 30px;
+    }
+    .resource-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+    }
+    .resource-card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    .resource-header {
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      color: white;
+      padding: 18px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.1em;
+    }
+    .resource-body { padding: 22px; color: #2c3e50; }
+
+    /* Sección pedagógica */
+    .pedagogical-section {
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+      padding: 50px 40px;
+      border-radius: 20px;
+      margin: 80px 0;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    }
+    .pedagogical-section h2 {
+      font-size: 2.6em;
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+    .mandatory { color: #e74c3c; font-weight: bold; font-size: 1.1em; }
+
+    a { color: #667eea; text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+    footer { text-align:center; margin-top:90px; color:#666; font-size:0.95em; padding:20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="header">Estándares en Plataformas Educativas</h1>
+    <p style="text-align:center; font-size:1.4em; color:#444; margin-bottom:50px;">
+      Técnico + Pedagógico – Sánchez Rodríguez (2009) + aportes actualizados 2025
+    </p>
+
+    <!-- 1. Qué son los estándares -->
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <div class="emoji">❓</div>
+          <h2>¿Qué son los estándares y para qué sirven?</h2>
+        </div>
+        <div class="flip-card-back">
+          <h3>Definición y propósito</h3>
+          <p>Reglas y protocolos técnicos que garantizan la <strong>interoperabilidad</strong> entre plataformas educativas.</p>
+          <ul>
+            <li>📦 Mover contenidos entre LMS sin rehacerlos</li>
+            <li>🤝 Compartir cursos entre instituciones</li>
+            <li>🏫 Entornos familiares para docentes y alumnado</li>
+            <li>🚪 Evitar el “vendor lock-in”</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Beneficios -->
+    <h2 style="text-align:center; color:#2c3e50; margin:70px 0 30px;">¿Por qué son importantes? Beneficios según actor</h2>
+    <div class="resources-grid">
+      <div class="flip-card"><div class="flip-card-inner">
+        <div class="flip-card-front">
+          <div class="emoji">🏫</div>
+          <h3>Instituciones</h3>
+        </div>
+        <div class="flip-card-back">
+          <ul>
+            <li>Independencia de proveedores</li>
+            <li>Reducción de costos</li>
+            <li>“Plug & play”</li>
+            <li>Mayor catálogo de contenidos</li>
+          </ul>
+        </div>
+      </div></div>
+
+      <div class="flip-card"><div class="flip-card-inner">
+        <div class="flip-card-front">
+          <div class="emoji">🏭</div>
+          <h3>Empresas tecnológicas</h3>
+        </div>
+        <div class="flip-card-back">
+          <ul>
+            <li>Menos desarrollos a medida</li>
+            <li>Menor costo</li>
+            <li>Mercado global</li>
+          </ul>
+        </div>
+      </div></div>
+
+      <div class="flip-card"><div class="flip-card-inner">
+        <div class="flip-card-front">
+          <div class="emoji">📒</div>
+          <h3>Productores de contenido</h3>
+        </div>
+        <div class="flip-card-back">
+          <ul>
+            <li>Contenidos universales</li>
+            <li>Sin adaptaciones múltiples</li>
+            <li>Más innovación</li>
+          </ul>
+        </div>
+      </div></div>
+
+      <div class="flip-card"><div class="flip-card-inner">
+        <div class="flip-card-front">
+          <div class="emoji">🎓</div>
+          <h3>Estudiantes</h3>
+        </div>
+        <div class="flip-card-back">
+          <ul>
+            <li>Acceso multi-institucional</li>
+            <li>Homologación sencilla</li>
+            <li>Experiencia consistente</li>
+          </ul>
+        </div>
+      </div></div>
+
+      <div class="flip-card"><div class="flip-card-inner">
+        <div class="flip-card-front">
+          <div class="emoji">🎨</div>
+          <h3>Diseñadores instruccionales</h3>
+        </div>
+        <div class="flip-card-back">
+          <ul>
+            <li>Repositorios reutilizables</li>
+            <li>Módulos fáciles de actualizar</li>
+            <li>Mayor eficiencia</li>
+          </ul>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 3. Gestión institucional -->
+    <div class="flip-card" style="margin:80px 0;">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <div class="emoji">🏛️</div>
+          <h2>Rol en la gestión institucional</h2>
+        </div>
+        <div class="flip-card-back">
+          <ul>
+            <li>Plataformas compartidas (ej. G9)</li>
+            <li>Importar cursos sin rehacerlos</li>
+            <li>Migrar en el futuro sin perder contenido</li>
+            <li>Ahorro en formación docente</li>
+          </ul>
+          <p style="margin-top:20px; background:#e74c3c; color:white; padding:15px; border-radius:12px; font-weight:bold;">
+            Sin estándares → migración lenta, costosa e inviable
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Elementos técnicos -->
+    <h2 style="text-align:center; color:#2c3e50; margin:80px 0 30px;">Elementos técnicos que deben estandarizarse</h2>
+    <div class="resources-grid">
+      <div class="resource-card">
+        <div class="resource-header">1. Requisitos técnicos mínimos</div>
+        <div class="resource-body">HTML5, CSS3, JS estándar · Pruebas multiplataforma</div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-header">2. Organización de contenidos</div>
+        <div class="resource-body">SCORM · IMS CP · xAPI · imsmanifest.xml</div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-header">3. Información del alumno</div>
+        <div class="resource-body">IMS LIP · xAPI (actor-verb-object)</div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-header">4. Evaluaciones</div>
+        <div class="resource-body">IMS QTI · Bancos de preguntas</div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-header">5. Metadatos</div>
+        <div class="resource-body">Dublin Core · LOM · IMS Metadata</div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-header">6. Transferencia de cursos</div>
+        <div class="resource-body">ZIP SCORM / IMS CP + manifiesto</div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-header">7. Run-Time Environment</div>
+        <div class="resource-body">Initialize(), SetValue(), Commit(), Terminate()</div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN PEDAGÓGICA -->
+    <div class="pedagogical-section">
+      <h2>🔥 Estándares PEDAGÓGICOS mínimos <span class="mandatory">(¡Sí o sí!)</span></h2>
+      <p style="text-align:center; font-size:1.3em; color:#2c3e50; margin-bottom:50px; font-weight:600;">
+        Si la plataforma no permite esto, pedagógicamente está coja aunque cumpla todos los estándares técnicos.
+      </p>
+
+      <div class="resources-grid">
+        <div class="flip-card"><div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="emoji">📁</div>
+            <h3>1. Estructura didáctica clara</h3>
+          </div>
+          <div class="flip-card-back">
+            <ul>
+              <li>Módulos → Unidades → Lecciones</li>
+              <li>Secuencia siempre visible</li>
+              <li>El estudiante sabe: <em>dónde estoy, de dónde vengo y qué sigue</em></li>
+            </ul>
+          </div>
+        </div></div>
+
+        <div class="flip-card"><div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="emoji">🎯</div>
+            <h3>2. Alineación constructiva</h3>
+          </div>
+          <div class="flip-card-back">
+            <ul>
+              <li>Cada actividad vinculada a resultados de aprendizaje</li>
+              <li>Rúbricas y criterios visibles</li>
+              <li>Respuesta rápida: ¿Qué evidencia evalúa qué competencia?</li>
+            </ul>
+          </div>
+        </div></div>
+
+        <div class="flip-card"><div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="emoji">✅</div>
+            <h3>3. Evaluación integrada</h3>
+          </div>
+          <div class="flip-card-back">
+            <ul>
+              <li>Banco de ítems reutilizable</li>
+              <li>Formativas y sumativas</li>
+              <li>Cuestionarios, tareas, rúbricas, foros evaluados</li>
+              <li>Retroalimentación con fecha y registro</li>
+            </ul>
+          </div>
+        </div></div>
+
+        <div class="flip-card"><div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="emoji">📈</div>
+            <h3>4. Seguimiento del progreso</h3>
+          </div>
+          <div class="flip-card-back">
+            <ul>
+              <li>Porcentaje completado y actividades pendientes</li>
+              <li>Historial de entregas y feedback</li>
+              <li>El docente ve tiempo invertido y puntos de fricción</li>
+            </ul>
+          </div>
+        </div></div>
+
+        <div class="flip-card"><div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="emoji">👥</div>
+            <h3>5. Interacción y presencia social</h3>
+          </div>
+          <div class="flip-card-back">
+            <ul>
+              <li>Foros por tema, mensajería, anuncios</li>
+              <li>Trabajo colaborativo (wikis, glosarios, tareas grupales)</li>
+              <li>Sin esto → aprendizaje colaborativo muy limitado</li>
+            </ul>
+          </div>
+        </div></div>
+
+        <div class="flip-card"><div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="emoji">♿</div>
+            <h3>6. Accesibilidad + UX didáctica</h3>
+          </div>
+          <div class="flip-card-back">
+            <ul>
+              <li>Navegación simple, pocos clics</li>
+              <li>Recursos multimodales sin problemas</li>
+              <li>Instrucciones claras, menú coherente</li>
+              <li>Accesibilidad técnica + cognitiva</li>
+            </ul>
+          </div>
+        </div></div>
+
+        <div class="flip-card"><div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="emoji">🏷️</div>
+            <h3>7. Metadatos educativos básicos</h3>
+          </div>
+          <div class="flip-card-back">
+            <ul>
+              <li>Título, autor, nivel, duración, palabras clave</li>
+              <li>Facilita búsqueda, curaduría y reuso</li>
+            </ul>
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- Recursos -->
+    <h2 style="text-align:center; color:#2c3e50; margin:90px 0 30px;">12 Recursos gratuitos y confiables (2025)</h2>
+    <div class="resources-grid">
+      <div class="resource-card">
+        <div class="resource-header">1. ADL / SCORM.com</div>
+        <div class="resource-body">
+          <a href="https://adlnet.gov" target="_blank">adlnet.gov</a> ·
+          <a href="https://scorm.com" target="_blank">scorm.com</a><br>
+          Documentación oficial SCORM, xAPI, cmi5
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-header">2. IMS Global</div>
+        <div class="resource-body">
+          <a href="https://www.imsglobal.org" target="_blank">imsglobal.org</a><br>
+          QTI, LTI, Common Cartridge, etc.
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-header">3. IEEE LTSC</div>
+        <div class="resource-body">
+          <a href="https://ieeeltsc.org" target="_blank">ieeeltsc.org</a><br>
+          Normas ISO y LOM
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-header">4. eLearning Industry</div>
+        <div class="resource-body">
+          <a href="https://elearningindustry.com" target="_blank">elearningindustry.com</a><br>
+          Artículos didácticos y comparativas
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-header">5. Moodle Docs</div>
+        <div class="resource-body">
+          <a href="https://docs.moodle.org" target="_blank">docs.moodle.org</a><br>
+          Implementación práctica real
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-header">6. Dublin Core</div>
+        <div class="resource-body">
+          <a href="https://dublincore.org" target="_blank">dublincore.org</a><br>
+          Metadatos universales
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      Documento académico interactivo completo · Técnico + Pedagógico · 2025<br>
+      ¡Listo para usar en clases, talleres y licitaciones LMS!
+    </footer>
+  </div>
+</body>
+</html>
