@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Función del profesor en las Plataformas Virtuales de Aprendizaje</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap");
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Montserrat", sans-serif;
+      background: radial-gradient(circle at top, #ff9a9e, #fad0c4 35%, #1f1c2c 100%);
+      color: #222;
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .wrapper {
+      max-width: 1100px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 24px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+      padding: 24px 26px 32px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.7rem;
+      color: #2c2c54;
+    }
+
+    header p {
+      margin: 6px 0 0;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      background: #ff6b81;
+      color: #fff;
+      margin-top: 8px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    .card {
+      background: linear-gradient(135deg, #fdfbfb, #ebedee);
+      border-radius: 18px;
+      padding: 14px 16px 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 0 0, #ffecd2, transparent 65%);
+      top: -24px;
+      right: -24px;
+      opacity: 0.7;
+    }
+
+    .card h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+      color: #2c2c54;
+    }
+
+    .card span.tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      background: #4dabf7;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .card p {
+      margin: 4px 0;
+      font-size: 0.86rem;
+      color: #444;
+    }
+
+    .network-section { margin-top: 10px; }
+
+    .network-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #2c2c54;
+      margin-bottom: 6px;
+    }
+
+    .network-subtitle {
+      font-size: 0.86rem;
+      color: #555;
+      margin-bottom: 12px;
+    }
+
+    .network-wrapper {
+      position: relative;
+      border-radius: 20px;
+      background: radial-gradient(circle at top, #15172a, #050509 60%);
+      height: 430px;
+      overflow: hidden;
+      padding: 10px;
+    }
+
+    #edges {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .node {
+      position: absolute;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      color: #fff;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+      user-select: none;
+      transform: translate(-50%, -50%);
+    }
+
+    .node:hover {
+      transform: translate(-50%, -50%) scale(1.08);
+      box-shadow: 0 0 18px rgba(255, 255, 255, 0.4);
+      z-index: 5;
+    }
+
+    .node::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      opacity: 0;
+      transition: opacity 0.18s ease;
+    }
+
+    .node:hover::before { opacity: 1; }
+
+    .core { background: #1dd1a1; }
+    .risk { background: #ee5253; }
+    .time { background: #3742fa; }
+    .ia { background: #9b59b6; }
+    .social { background: #00cec9; }
+    .cognitive { background: #feca57; color:#222; }
+    .author { background: #a55eea; }
+    .salmon { background: #ff6b81; }
+    .pandemia { background: #ff4757; }
+    .support { background: #ff7f50; }
+    .future { background: #f6b93b; color:#222; }
+
+    .node span.small {
+      display: block;
+      font-size: 0.68em;
+      opacity: 0.85;
+    }
+
+    .node.star {
+      padding: 8px 13px;
+      font-size: 0.85rem;
+      box-shadow: 0 0 18px rgba(46, 213, 115, 0.8);
+    }
+
+    .node.star::after {
+      content: "★";
+      margin-left: 4px;
+    }
+
+    .tooltip {
+      position: absolute;
+      max-width: 320px;
+      background: rgba(5, 5, 15, 0.96);
+      color: #fff;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      line-height: 1.4;
+      pointer-events: none;
+      opacity: 0;
+      transform: translate(-50%, -8px);
+      transition: opacity 0.15s ease;
+      z-index: 10;
+    }
+
+    .tooltip.visible { opacity: 1; }
+
+    .tooltip b { color: #1dd1a1; }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.72rem;
+      margin-top: 8px;
+      color: #eee;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 3px 7px;
+      border-radius: 999px;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    @media (max-width: 768px) {
+      .wrapper { padding: 18px 14px 24px; }
+      header h1 { font-size: 1.35rem; }
+      .network-wrapper { height: 430px; }
+    }
+  </style>
+
+<style>
+  body {
+    margin: 0;
+    padding-left: 260px;
+  }
+  #sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 250px;
+    background: #020617;
+    color: #e5e7eb;
+    padding: 18px 16px;
+    box-shadow: 4px 0 12px rgba(0,0,0,0.55);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    overflow-y: auto;
+    z-index: 999;
+  }
+  #sidebar .brand {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #fbbf24;
+  }
+  #sidebar h2 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #93c5fd;
+    margin: 12px 0 4px;
+  }
+  #sidebar a {
+    display: block;
+    padding: 6px 9px;
+    margin: 2px 0;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #e5e7eb;
+    font-size: 0.86rem;
+  }
+  #sidebar a:hover {
+    background: #1f2937;
+    color: #93c5fd;
+  }
+  #sidebar a.current {
+    background: #1d4ed8;
+    color: #e5e7eb;
+  }
+
+  #sidebar-toggle {
+    display: none;
+  }
+
+  .nav-buttons {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .nav-buttons a {
+    padding: 8px 14px;
+    border-radius: 999px;
+    text-decoration: none;
+    background: #1d4ed8;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .nav-buttons a.secondary {
+    background: #4b5563;
+  }
+  .nav-buttons a:hover {
+    filter: brightness(1.1);
+  }
+
+  @media (max-width: 900px) {
+    body {
+      padding-left: 0;
+    }
+    #sidebar {
+      width: 220px;
+      transform: translateX(-100%);
+      transition: transform .3s ease-in-out;
+    }
+    body.show-sidebar #sidebar {
+      transform: translateX(0);
+    }
+    #sidebar-toggle {
+      display: inline-block;
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      background: #1d4ed8;
+      color: #f9fafb;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+  }
+</style>
+<script>
+  function toggleSidebar(){
+    document.body.classList.toggle('show-sidebar');
+  }
+</script>
+
+</head>
+<body>
+<button id="sidebar-toggle" onclick="toggleSidebar()">☰ Menú</button>
+<div id="sidebar">
+<div class="brand">Plataformas Virtuales</div>
+<h2>Inicio</h2>
+<a href="../index.html" class="">Inicio del curso</a>
+<h2>Sesión 1</h2>
+<a href="WEB1,2,3,4.html" class="">Web 1.0–4.0</a>
+<a href="A2EjemplosWEB.html" class="">A2 Ejemplos Web</a>
+<a href="integrado web1,2,3,4.html" class="">Integrado Web 1–4</a>
+<a href="Herramientas_PVE.html" class="">Herramientas PVE</a>
+<a href="PVE_Tipos.html" class="">Tipos de PVE</a>
+<a href="Elección_PVE.html" class="">Elección de PVE</a>
+<a href="Estándares.html" class="">Estándares</a>
+<a href="A3Ejemplo_PVE.html" class="">A3 Ejemplo PVE</a>
+<a href="Línea_tiempo_PVE.html" class="">Línea de tiempo PVE</a>
+<a href="A4_reflexion_nube.html" class="">A4 Reflexión nube</a>
+<a href="Funcion_profesor.html" class="current">Función profesor</a>
+<a href="Funcion_estudiante.html" class="">Función estudiante</a>
+<a href="A5_reflexion_infografia.html" class="">A5 Infografía</a>
+<a href="A6_Identificación_curso.html" class="">A6 Identificación curso</a>
+<h2>Sesión 2</h2>
+<a href="../sesion2/EVA_intro.html" class="">EVA Introducción</a>
+<a href="../sesion2/DI_intro1.html" class="">DI Parte 1</a>
+<a href="../sesion2/DI_intro2_clasification.html" class="">DI Parte 2</a>
+<a href="../sesion2/A7_elabora_DI.html" class="">A7 Elaborar DI</a>
+<a href="../sesion2/A8_DI_integrados.html" class="">A8 DI integrados</a>
+<a href="../sesion2/A9_Desarrollo_curso.html" class="">A9 Desarrollo curso</a>
+<a href="../sesion2/ADDIE.html" class="">ADDIE interactivo</a>
+</div>
+
+  <div class="wrapper">
+    <header>
+      <h1>Función del profesor en las Plataformas Virtuales de Aprendizaje</h1>
+      <p>Integrando las visiones de Silva Quiroz (2010) y Jara-Vaca et al. (2021)</p>
+      <div class="badge">Profesor = tutor-e-moderador + profesional multidimensional en crisis</div>
+    </header>
+
+    <section class="cards-grid">
+      <article class="card">
+        <span class="tag">Silva Quiroz (2010)</span>
+        <h3>Tutor-e-moderador en EVA</h3>
+        <p><b>Cambio de rol:</b> de transmisor a facilitador que diseña experiencias, modera la interacción y sostiene la comunidad de aprendizaje.</p>
+        <p><b>Tres presencias:</b> docente, social y cognitiva articuladas para lograr aprendizajes significativos.</p>
+      </article>
+
+      <article class="card">
+        <span class="tag">Jara-Vaca et al. (2021)</span>
+        <h3>Docente en pandemia</h3>
+        <p>El profesor se vuelve planificador, diseñador innovador, evaluador flexible, soporte emocional y usuario avanzado de TIC.</p>
+        <p>Todo esto en medio de brechas de conectividad y exigencias institucionales cambiantes.</p>
+      </article>
+
+      <article class="card">
+        <span class="tag">TIC + Humanidad</span>
+        <h3>Mediador humano 2030</h3>
+        <p>Frente a la IA generativa y la expansión de VR/AR, el docente sigue siendo la pieza clave que conecta tecnología, sentido pedagógico y cuidado socioemocional.</p>
+      </article>
+    </section>
+
+    <section class="network-section">
+      <div class="network-title">Red conceptual: el profesor como mediador humano en ecologías digitales</div>
+      <div class="network-subtitle">
+        Pasa el cursor sobre cada nodo para ver su descripción y arrástralos para reorganizar la red.
+      </div>
+
+      <div class="network-wrapper" id="net">
+        <svg id="edges"></svg>
+
+        <!-- Nodos -->
+        <div
+          class="node core star"
+          id="n-mediador"
+          style="top: 44%; left: 33%;"
+          data-links="n-vr,n-ia,n-riesgo,n-prescog,n-pandemia,n-apoyo"
+          data-desc="Mediador Humano 2030: profesor que integra tecnología avanzada con presencia cognitiva, social y ética. Conecta IA, VR/AR y experiencias de pandemia para sostener una educación centrada en las personas.">
+          Mediador Humano<br><span class="small">2030</span>
+        </div>
+
+        <div
+          class="node time"
+          id="n-vr"
+          style="top: 12%; left: 28%;"
+          data-links="n-mediador,n-ia"
+          data-desc="VR/AR 2025: entornos inmersivos que amplían laboratorios, simulaciones y experiencias culturales. Potencian la acción del docente, pero requieren diseño didáctico y acompañamiento cercano.">
+          VR/AR<br><span class="small">2025</span>
+        </div>
+
+        <div
+          class="node ia"
+          id="n-ia"
+          style="top: 18%; left: 45%;"
+          data-links="n-mediador,n-vr,n-pressoc,n-presdoc"
+          data-desc="IA Generativa 2023-25: sistemas capaces de producir textos, imágenes y retroalimentación. Abren posibilidades de personalización y coautoría, pero requieren un docente que oriente usos éticos y críticos.">
+          IA Generativa<br><span class="small">2023-25</span>
+        </div>
+
+        <div
+          class="node social"
+          id="n-pressoc"
+          style="top: 16%; left: 63%;"
+          data-links="n-ia,n-presdoc"
+          data-desc="Presencia social: dimensión que permite que estudiantes y docentes se perciban como personas reales, con emociones y voz propia. Reduce aislamiento y favorece la colaboración en línea.">
+          Presencia<br><span class="small">Social</span>
+        </div>
+
+        <div
+          class="node social"
+          id="n-presdoc"
+          style="top: 29%; left: 71%;"
+          data-links="n-pressoc,n-prescog,n-silva"
+          data-desc="Presencia docente: diseño, organización y orientación de los procesos cognitivos y sociales en el EVA. Es la forma en que el profesor hace visible su guía y liderazgo pedagógico.">
+          Presencia<br><span class="small">Docente</span>
+        </div>
+
+        <div
+          class="node cognitive"
+          id="n-prescog"
+          style="top: 32%; left: 48%;"
+          data-links="n-mediador,n-presdoc,n-silva"
+          data-desc="Presencia cognitiva: espacio donde el alumnado construye significado mediante la reflexión y el diálogo crítico. El docente diseña actividades, preguntas y proyectos que la hagan posible.">
+          Presencia<br><span class="small">Cognitiva</span>
+        </div>
+
+        <div
+          class="node author"
+          id="n-silva"
+          style="top: 42%; left: 64%;"
+          data-links="n-prescog,n-presdoc,n-salmon"
+          data-desc="Silva Quiroz (2010): plantea que sin un tutor activo el EVA fracasa. El profesor se vuelve diseñador, facilitador y moderador de la comunidad de aprendizaje en línea.">
+          Silva Quiroz<br><span class="small">2010</span>
+        </div>
+
+        <div
+          class="node salmon"
+          id="n-salmon"
+          style="top: 56%; left: 60%;"
+          data-links="n-silva,n-pandemia"
+          data-desc="Modelo de e-moderación de Salmon: 1) acceso y motivación; 2) socialización online; 3) intercambio de información; 4) construcción de conocimiento mediante discusión y reflexión crítica; 5) desarrollo hacia un aprendizaje cada vez más autónomo.">
+          E-moderación<br><span class="small">Salmon</span>
+        </div>
+
+        <div
+          class="node pandemia"
+          id="n-pandemia"
+          style="top: 68%; left: 41%;"
+          data-links="n-mediador,n-riesgo,n-salmon,n-apoyo,n-brecha"
+          data-desc="Pandemia 2020-21: cierre masivo de escuelas y migración abrupta a la educación virtual. Expone brechas de acceso, sobrecarga laboral y necesidad de formación acelerada en TIC para el profesorado.">
+          Pandemia<br><span class="small">2020-21</span>
+        </div>
+
+        <div
+          class="node support"
+          id="n-apoyo"
+          style="top: 76%; left: 20%;"
+          data-links="n-pandemia,n-mediador"
+          data-desc="Apoyo emocional: en la educación virtual en crisis, el docente también sostiene emociones, escucha preocupaciones y fomenta resiliencia en estudiantes y familias.">
+          Apoyo<br><span class="small">Emocional</span>
+        </div>
+
+        <div
+          class="node risk"
+          id="n-riesgo"
+          style="top: 54%; left: 37%;"
+          data-links="n-mediador,n-pandemia"
+          data-desc="Riesgo de deshumanización: automatizar sin sentido pedagógico puede convertir la educación en simple gestión de tareas. El rol del docente es mantener el foco en la persona y el vínculo pedagógico.">
+          Riesgo<br><span class="small">Deshumanización</span>
+        </div>
+
+        <div
+          class="node future"
+          id="n-brecha"
+          style="top: 88%; left: 47%;"
+          data-links="n-pandemia"
+          data-desc="Brechas e infraestructura: las dificultades de conectividad y equipamiento condicionan la acción docente. Recordatorio de que no hay innovación digital posible sin políticas de inclusión tecnológica.">
+          Brecha<br><span class="small">Digital</span>
+        </div>
+
+        <div id="tooltip" class="tooltip"></div>
+
+        <div class="legend">
+          <span><span class="legend-dot" style="background:#1dd1a1;"></span> Rol central del profesor</span>
+          <span><span class="legend-dot" style="background:#9b59b6;"></span> IA / tecnología avanzada</span>
+          <span><span class="legend-dot" style="background:#00cec9;"></span> Presencias en el EVA</span>
+          <span><span class="legend-dot" style="background:#ff6b81;"></span> Modelos teóricos</span>
+          <span><span class="legend-dot" style="background:#ff4757;"></span> Experiencia pandemia</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const wrapper = document.getElementById("net");
+    const svg = document.getElementById("edges");
+    const nodes = Array.from(wrapper.querySelectorAll(".node"));
+    const tooltip = document.getElementById("tooltip");
+
+    // ---- Dibujo de aristas ----
+    function drawEdges() {
+      const rect = wrapper.getBoundingClientRect();
+      svg.setAttribute("width", rect.width);
+      svg.setAttribute("height", rect.height);
+      svg.innerHTML = "";
+
+      const drawn = new Set();
+
+      nodes.forEach(node => {
+        const links = (node.dataset.links || "")
+          .split(",")
+          .map(s => s.trim())
+          .filter(Boolean);
+
+        const nodeRect = node.getBoundingClientRect();
+        const x1 = nodeRect.left - rect.left + nodeRect.width / 2;
+        const y1 = nodeRect.top - rect.top + nodeRect.height / 2;
+
+        links.forEach(id => {
+          const target = document.getElementById(id);
+          if (!target) return;
+
+          const key = [node.id, id].sort().join("-");
+          if (drawn.has(key)) return;
+          drawn.add(key);
+
+          const tRect = target.getBoundingClientRect();
+          const x2 = tRect.left - rect.left + tRect.width / 2;
+          const y2 = tRect.top - rect.top + tRect.height / 2;
+
+          const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+          line.setAttribute("x1", x1);
+          line.setAttribute("y1", y1);
+          line.setAttribute("x2", x2);
+          line.setAttribute("y2", y2);
+          line.setAttribute("stroke", "rgba(173, 216, 230, 0.8)");
+          line.setAttribute("stroke-width", "1.5");
+          line.setAttribute("stroke-linecap", "round");
+          svg.appendChild(line);
+        });
+      });
+    }
+
+    // ---- Tooltip ----
+    nodes.forEach(node => {
+      node.addEventListener("mouseenter", () => {
+        tooltip.innerHTML = node.dataset.desc || "";
+        tooltip.classList.add("visible");
+        positionTooltip(node);
+      });
+
+      node.addEventListener("mousemove", e => {
+        positionTooltip(node, e);
+      });
+
+      node.addEventListener("mouseleave", () => {
+        tooltip.classList.remove("visible");
+      });
+    });
+
+    function positionTooltip(node, evt) {
+      const rect = wrapper.getBoundingClientRect();
+      let x, y;
+      if (evt) {
+        x = evt.clientX - rect.left;
+        y = evt.clientY - rect.top - 12;
+      } else {
+        const nRect = node.getBoundingClientRect();
+        x = nRect.left - rect.left + nRect.width / 2;
+        y = nRect.top - rect.top - 8;
+      }
+      tooltip.style.left = x + "px";
+      tooltip.style.top = y + "px";
+    }
+
+    // ---- Drag & drop de nodos ----
+    let activeNode = null;
+    let dragOffset = { dx: 0, dy: 0 };
+
+    function getPointer(e) {
+      if (e.touches && e.touches.length) {
+        return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }
+      return { x: e.clientX, y: e.clientY };
+    }
+
+    function startDrag(e, node) {
+      e.preventDefault();
+      activeNode = node;
+      const pointer = getPointer(e);
+      const rect = node.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      dragOffset.dx = pointer.x - centerX;
+      dragOffset.dy = pointer.y - centerY;
+
+      document.addEventListener("mousemove", handleDrag);
+      document.addEventListener("mouseup", endDrag);
+      document.addEventListener("touchmove", handleDrag, { passive: false });
+      document.addEventListener("touchend", endDrag);
+    }
+
+    function handleDrag(e) {
+      if (!activeNode) return;
+      e.preventDefault();
+      const pointer = getPointer(e);
+      const wrapRect = wrapper.getBoundingClientRect();
+
+      const newCenterX = pointer.x - dragOffset.dx;
+      const newCenterY = pointer.y - dragOffset.dy;
+
+      const left = newCenterX - wrapRect.left;
+      const top = newCenterY - wrapRect.top;
+
+      activeNode.style.left = left + "px";
+      activeNode.style.top = top + "px";
+
+      drawEdges();
+    }
+
+    function endDrag() {
+      activeNode = null;
+      document.removeEventListener("mousemove", handleDrag);
+      document.removeEventListener("mouseup", endDrag);
+      document.removeEventListener("touchmove", handleDrag);
+      document.removeEventListener("touchend", endDrag);
+    }
+
+    nodes.forEach(node => {
+      node.addEventListener("mousedown", e => startDrag(e, node));
+      node.addEventListener("touchstart", e => startDrag(e, node), { passive: false });
+    });
+
+    // ---- Inicialización ----
+    window.addEventListener("resize", drawEdges);
+    window.addEventListener("load", drawEdges);
+    setTimeout(drawEdges, 250);
+  </script>
+<div class="nav-buttons">
+<a href="A4_reflexion_nube.html">⬅ Anterior</a>
+<a href="../index.html" class="secondary">Inicio</a>
+<a href="Funcion_estudiante.html">Siguiente ➜</a>
+</div>
+</body>
+</html>

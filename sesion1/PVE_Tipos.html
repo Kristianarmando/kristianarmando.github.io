@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matriz Comparativa LMS: Comerciales vs Libre vs Desarrollo Propio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --comercial:    #1e40af;   /* azul oscuro */
+            --libre:        #16a34a;   /* verde vivo */
+            --propio:       #7c3aed;   /* violeta */
+            --bg:           #0f172a;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: #e2e8f0;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        h1 {
+            text-align: center;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            margin-bottom: 60px;
+            opacity: 0.9;
+        }
+
+        .matrix {
+            display: grid;
+            grid-template-columns: 280px repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+        .header {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 1.4rem;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+        .criteria {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            border-radius: 16px;
+        }
+
+        .cell {
+            background: rgba(30,40,60,0.7);
+            border-radius: 18px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.1);
+            min-height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .cell:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            z-index: 10;
+        }
+
+        /* Imágenes de fondo al hover */
+        .comercial-cell:hover   { background: linear-gradient(rgba(30,40,60,0.95), rgba(30,40,60,0.95)), url('https://images.unsplash.com/photo-1516321310764-9f3c8c1c0b6e?auto=format&fit=crop&q=80') center/cover; }
+        .libre-cell:hover       { background: linear-gradient(rgba(30,40,60,0.95), rgba(30,40,60,0.95)), url('https://images.unsplash.com/photo-1517180102446-f3ece451e9f7?auto=format&fit=crop&q=80') center/cover; }
+        .propio-cell:hover      { background: linear-gradient(rgba(30,40,60,0.95), rgba(30,40,60,0.95)), url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80') center/cover; }
+
+        .cell strong { color: white; font-size: 1.1rem; }
+        .cell .details {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.92);
+            padding: 30px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            overflow-y: auto;
+            border-radius: 18px;
+        }
+        .cell:hover .details { opacity: 1; }
+
+        .comercial-cell   { border-left: 6px solid var(--comercial); }
+        .libre-cell       { border-left: 6px solid var(--libre); }
+        .propio-cell      { border-left: 6px solid var(--propio); }
+
+        @media (max-width: 1024px) {
+            .matrix { grid-template-columns: 1fr; }
+            .header, .criteria { grid-column: 1 / -1; }
+        }
+    </style>
+
+<style>
+  body {
+    margin: 0;
+    padding-left: 260px;
+  }
+  #sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 250px;
+    background: #020617;
+    color: #e5e7eb;
+    padding: 18px 16px;
+    box-shadow: 4px 0 12px rgba(0,0,0,0.55);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    overflow-y: auto;
+    z-index: 999;
+  }
+  #sidebar .brand {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #fbbf24;
+  }
+  #sidebar h2 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #93c5fd;
+    margin: 12px 0 4px;
+  }
+  #sidebar a {
+    display: block;
+    padding: 6px 9px;
+    margin: 2px 0;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #e5e7eb;
+    font-size: 0.86rem;
+  }
+  #sidebar a:hover {
+    background: #1f2937;
+    color: #93c5fd;
+  }
+  #sidebar a.current {
+    background: #1d4ed8;
+    color: #e5e7eb;
+  }
+
+  #sidebar-toggle {
+    display: none;
+  }
+
+  .nav-buttons {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .nav-buttons a {
+    padding: 8px 14px;
+    border-radius: 999px;
+    text-decoration: none;
+    background: #1d4ed8;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .nav-buttons a.secondary {
+    background: #4b5563;
+  }
+  .nav-buttons a:hover {
+    filter: brightness(1.1);
+  }
+
+  @media (max-width: 900px) {
+    body {
+      padding-left: 0;
+    }
+    #sidebar {
+      width: 220px;
+      transform: translateX(-100%);
+      transition: transform .3s ease-in-out;
+    }
+    body.show-sidebar #sidebar {
+      transform: translateX(0);
+    }
+    #sidebar-toggle {
+      display: inline-block;
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      background: #1d4ed8;
+      color: #f9fafb;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+  }
+</style>
+<script>
+  function toggleSidebar(){
+    document.body.classList.toggle('show-sidebar');
+  }
+</script>
+
+</head>
+<body>
+<button id="sidebar-toggle" onclick="toggleSidebar()">☰ Menú</button>
+<div id="sidebar">
+<div class="brand">Plataformas Virtuales</div>
+<h2>Inicio</h2>
+<a href="../index.html" class="">Inicio del curso</a>
+<h2>Sesión 1</h2>
+<a href="WEB1,2,3,4.html" class="">Web 1.0–4.0</a>
+<a href="A2EjemplosWEB.html" class="">A2 Ejemplos Web</a>
+<a href="integrado web1,2,3,4.html" class="">Integrado Web 1–4</a>
+<a href="Herramientas_PVE.html" class="">Herramientas PVE</a>
+<a href="PVE_Tipos.html" class="current">Tipos de PVE</a>
+<a href="Elección_PVE.html" class="">Elección de PVE</a>
+<a href="Estándares.html" class="">Estándares</a>
+<a href="A3Ejemplo_PVE.html" class="">A3 Ejemplo PVE</a>
+<a href="Línea_tiempo_PVE.html" class="">Línea de tiempo PVE</a>
+<a href="A4_reflexion_nube.html" class="">A4 Reflexión nube</a>
+<a href="Funcion_profesor.html" class="">Función profesor</a>
+<a href="Funcion_estudiante.html" class="">Función estudiante</a>
+<a href="A5_reflexion_infografia.html" class="">A5 Infografía</a>
+<a href="A6_Identificación_curso.html" class="">A6 Identificación curso</a>
+<h2>Sesión 2</h2>
+<a href="../sesion2/EVA_intro.html" class="">EVA Introducción</a>
+<a href="../sesion2/DI_intro1.html" class="">DI Parte 1</a>
+<a href="../sesion2/DI_intro2_clasification.html" class="">DI Parte 2</a>
+<a href="../sesion2/A7_elabora_DI.html" class="">A7 Elaborar DI</a>
+<a href="../sesion2/A8_DI_integrados.html" class="">A8 DI integrados</a>
+<a href="../sesion2/A9_Desarrollo_curso.html" class="">A9 Desarrollo curso</a>
+<a href="../sesion2/ADDIE.html" class="">ADDIE interactivo</a>
+</div>
+
+
+<h1>Matriz Comparativa de Plataformas Educativas (LMS)</h1>
+<p class="subtitle">Pasa el ratón sobre cada celda para ver toda la información detallada</p>
+
+<div class="matrix">
+
+    <!-- Encabezados -->
+    <div class="header"></div>
+    <div class="header" style="background:var(--comercial);color:white;">Plataformas<br>Comerciales</div>
+    <div class="header" style="background:var(--libre);color:white;">Software Libre<br>(GPL)</div>
+    <div class="header" style="background:var(--propio);color:white;">Desarrollo<br>Propio</div>
+
+    <!-- Criterios + celdas -->
+    <div class="criteria">Descripción general</div>
+    <div class="cell comercial-cell"><strong>Soluciones propietarias</strong><br>Pago por licencia y soporte profesional<br><div class="details">Soluciones propietarias que requieren pago por licencia, mantenimiento y soporte. Evolucionan rápidamente con versiones robustas y modulares.</div></div>
+    <div class="cell libre-cell"><strong>Software Libre</strong><br>Licencia GPL – comunidad global<br><div class="details">Licencia GPL: libertades de uso, estudio, modificación y distribución. Gratuitas y mantenidas por comunidades internacionales.</div></div>
+    <div class="cell propio-cell"><strong>Desarrollo institucional</strong><br>Para necesidades muy específicas<br><div class="details">Desarrolladas por la propia institución (universidad, consorcio) para cubrir necesidades pedagógicas o técnicas concretas. No se comercializan.</div></div>
+
+    <div class="criteria">Modelo de licencia</div>
+    <div class="cell comercial-cell">Pago por usuarios o cuota anual<br>Licencia controlada<br><div class="details">Pago por instalación, usuarios o cuota anual. Licencias limitadas y controladas por la empresa.</div></div>
+    <div class="cell libre-cell">GPL – 4 libertades<br><div class="details">Licencia GPL: libertad de uso, estudio, modificación y distribución del código fuente.</div></div>
+    <div class="cell propio-cell">Licencia interna/institucional<br>Código cerrado o interno<br><div class="details">Licencia interna. Código fuente solo accesible al equipo desarrollador de la institución.</div></div>
+
+    <div class="criteria">Costo</div>
+    <div class="cell comercial-cell">Alto (licencias + soporte)<br><div class="details">Pagos recurrentes según número de usuarios o cuota institucional.</div></div>
+    <div class="cell libre-cell">Muy bajo o nulo<br><div class="details">Sin costo por licencia ni por número de usuarios. Solo costos de servidor y personal técnico.</div></div>
+    <div class="cell propio-cell">Alto inicial → bajo a largo plazo<br><div class="details">Inversión fuerte en desarrollo, pero sin pagos recurrentes de licencia.</div></div>
+
+    <div class="criteria">Instalación y soporte</div>
+    <div class="cell comercial-cell">Muy fácil + soporte profesional<br><div class="details">Instalación guiada, documentación premium y soporte técnico 24/7.</div></div>
+    <div class="cell libre-cell">Técnica + comunidad/foros<br><div class="details">Requiere conocimientos técnicos. Soporte vía foros y comunidad.</div></div>
+    <div class="cell propio-cell">Dependiente del equipo interno<br><div class="details">Todo el soporte recae en el equipo de desarrollo institucional.</div></div>
+
+    <div class="criteria">Flexibilidad</div>
+    <div class="cell comercial-cell">Limitada (módulos comerciales)<br><div class="details">Personalización restringida al catálogo de la empresa.</div></div>
+    <div class="cell libre-cell">Muy alta (código abierto)<br><div class="details">Acceso total al código → puedes modificar todo.</div></div>
+    <div class="cell propio-cell">Total<br><div class="details">Personalización 100 % sin restricciones externas.</div></div>
+
+    <div class="criteria">Ejemplos reales</div>
+    <div class="cell comercial-cell">Blackboard, WebCT, ANGEL, e-ducativa<br><div class="details">Líderes en universidades privadas y grandes corporaciones.</div></div>
+    <div class="cell libre-cell">Moodle, Sakai, ILIAS, Claroline, Dokeos<br><div class="details">Usadas por miles de instituciones públicas en todo el mundo (Extremadura, Andalucía, Cataluña…).</div></div>
+    <div class="cell propio-cell">Ágora Virtual (Univ. Málaga), plataformas CNICE, proyectos universitarios internos<br><div class="details">Desarrollos a medida para modelos pedagógicos únicos.</div></div>
+
+</div>
+
+<div style="text-align:center;margin-top:80px;font-size:1.1rem;opacity:0.8;">
+    Infografía interactiva • Dr. Kristian Armando Pineda Castillo • UPES Culiacán • 2025
+</div>
+
+<div class="nav-buttons">
+<a href="Herramientas_PVE.html">⬅ Anterior</a>
+<a href="../index.html" class="secondary">Inicio</a>
+<a href="Elección_PVE.html">Siguiente ➜</a>
+</div>
+</body>
+</html>

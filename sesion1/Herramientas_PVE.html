@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herramientas Esenciales de una Plataforma Educativa Virtual</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --distribucion: #3b82f6;   /* azul */
+            --comunicacion: #10b981;   /* verde esmeralda */
+            --evaluacion:   #f59e0b;   /* ámbar */
+            --administracion: #8b5cf6; /* violeta */
+            --complementarias: #ec4899; /* rosa */
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        h1 {
+            text-align: center;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6, #fb923c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 1.4rem;
+            margin-bottom: 60px;
+            opacity: 0.9;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: rgba(30,40,50,0.9);
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+        .card:hover { transform: translateY(-15px); }
+
+        .card-header {
+            padding: 40px 30px 30px;
+            text-align: center;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 800;
+            position: relative;
+        }
+        .card-header i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        .card-header .badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Colores por categoría */
+        .distribucion   .card-header { background: var(--distribucion); }
+        .comunicacion    .card-header { background: var(--comunicacion); }
+        .evaluacion      .card-header { background: var(--evaluacion); }
+        .administracion .card-header { background: var(--administracion); }
+        .complementarias .card-header { background: var(--complementarias); }
+
+        .card-body {
+            max-height: 0;
+            overflow: hidden;
+            background: rgba(15,23,42,0.98);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 0 40px;
+        }
+        .card.active .card-body {
+            max-height: 800px;
+            padding: 40px;
+        }
+
+        .card-body h3 {
+            color: #60a5fa;
+            margin: 20px 0 15px;
+            font-size: 1.3rem;
+        }
+        .card-body ul {
+            list-style: none;
+            padding-left: 10px;
+        }
+        .card-body li {
+            margin: 12px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        .card-body li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #34d399;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 80px;
+            padding: 40px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 20px;
+            font-size: 1.1rem;
+        }
+    </style>
+
+<style>
+  body {
+    margin: 0;
+    padding-left: 260px;
+  }
+  #sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 250px;
+    background: #020617;
+    color: #e5e7eb;
+    padding: 18px 16px;
+    box-shadow: 4px 0 12px rgba(0,0,0,0.55);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    overflow-y: auto;
+    z-index: 999;
+  }
+  #sidebar .brand {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #fbbf24;
+  }
+  #sidebar h2 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #93c5fd;
+    margin: 12px 0 4px;
+  }
+  #sidebar a {
+    display: block;
+    padding: 6px 9px;
+    margin: 2px 0;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #e5e7eb;
+    font-size: 0.86rem;
+  }
+  #sidebar a:hover {
+    background: #1f2937;
+    color: #93c5fd;
+  }
+  #sidebar a.current {
+    background: #1d4ed8;
+    color: #e5e7eb;
+  }
+
+  #sidebar-toggle {
+    display: none;
+  }
+
+  .nav-buttons {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .nav-buttons a {
+    padding: 8px 14px;
+    border-radius: 999px;
+    text-decoration: none;
+    background: #1d4ed8;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .nav-buttons a.secondary {
+    background: #4b5563;
+  }
+  .nav-buttons a:hover {
+    filter: brightness(1.1);
+  }
+
+  @media (max-width: 900px) {
+    body {
+      padding-left: 0;
+    }
+    #sidebar {
+      width: 220px;
+      transform: translateX(-100%);
+      transition: transform .3s ease-in-out;
+    }
+    body.show-sidebar #sidebar {
+      transform: translateX(0);
+    }
+    #sidebar-toggle {
+      display: inline-block;
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      background: #1d4ed8;
+      color: #f9fafb;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+  }
+</style>
+<script>
+  function toggleSidebar(){
+    document.body.classList.toggle('show-sidebar');
+  }
+</script>
+
+</head>
+<body>
+<button id="sidebar-toggle" onclick="toggleSidebar()">☰ Menú</button>
+<div id="sidebar">
+<div class="brand">Plataformas Virtuales</div>
+<h2>Inicio</h2>
+<a href="../index.html" class="">Inicio del curso</a>
+<h2>Sesión 1</h2>
+<a href="WEB1,2,3,4.html" class="">Web 1.0–4.0</a>
+<a href="A2EjemplosWEB.html" class="">A2 Ejemplos Web</a>
+<a href="integrado web1,2,3,4.html" class="">Integrado Web 1–4</a>
+<a href="Herramientas_PVE.html" class="current">Herramientas PVE</a>
+<a href="PVE_Tipos.html" class="">Tipos de PVE</a>
+<a href="Elección_PVE.html" class="">Elección de PVE</a>
+<a href="Estándares.html" class="">Estándares</a>
+<a href="A3Ejemplo_PVE.html" class="">A3 Ejemplo PVE</a>
+<a href="Línea_tiempo_PVE.html" class="">Línea de tiempo PVE</a>
+<a href="A4_reflexion_nube.html" class="">A4 Reflexión nube</a>
+<a href="Funcion_profesor.html" class="">Función profesor</a>
+<a href="Funcion_estudiante.html" class="">Función estudiante</a>
+<a href="A5_reflexion_infografia.html" class="">A5 Infografía</a>
+<a href="A6_Identificación_curso.html" class="">A6 Identificación curso</a>
+<h2>Sesión 2</h2>
+<a href="../sesion2/EVA_intro.html" class="">EVA Introducción</a>
+<a href="../sesion2/DI_intro1.html" class="">DI Parte 1</a>
+<a href="../sesion2/DI_intro2_clasification.html" class="">DI Parte 2</a>
+<a href="../sesion2/A7_elabora_DI.html" class="">A7 Elaborar DI</a>
+<a href="../sesion2/A8_DI_integrados.html" class="">A8 DI integrados</a>
+<a href="../sesion2/A9_Desarrollo_curso.html" class="">A9 Desarrollo curso</a>
+<a href="../sesion2/ADDIE.html" class="">ADDIE interactivo</a>
+</div>
+
+
+    <h1>Herramientas Esenciales de un LMS</h1>
+    <p class="subtitle">Infografía interactiva – Haz click en cada tarjeta para ver detalles</p>
+
+    <div class="grid">
+
+        <!-- 1. Distribución de contenidos -->
+        <div class="card distribucion" onclick="this.classList.toggle('active')">
+            <div class="card-header">
+                <i class="fas fa-folder-open"></i>
+                <div>Distribución<br>de Contenidos</div>
+                <div class="badge">Profesor → Alumno</div>
+            </div>
+            <div class="card-body">
+                <h3>¿Qué permite?</h3>
+                <ul>
+                    <li>Subir archivos (PDF, vídeos, imágenes, HTML)</li>
+                    <li>Organizar en carpetas y unidades temáticas</li>
+                    <li>Calendarios, glosarios y FAQs</li>
+                    <li>Enlaces externos y páginas informativas</li>
+                    <li>Acceso permanente y estructurado para el alumnado</li>
+                </ul>
+                <p><strong>Usuarios principales:</strong> Profesorado (crea) – Alumnado (consulta)</p>
+            </div>
+        </div>
+
+        <!-- 2. Comunicación y colaboración -->
+        <div class="card comunicacion" onclick="this.classList.toggle('active')">
+            <div class="card-header">
+                <i class="fas fa-comments"></i>
+                <div>Comunicación y<br>Colaboración</div>
+                <div class="badge">Todos ↔ Todos</div>
+            </div>
+            <div class="card-body">
+                <h3>Herramientas síncronas y asíncronas</h3>
+                <ul>
+                    <li><strong>Foros</strong> → debates y preguntas abiertas</li>
+                    <li><strong>Chat</strong> → tutorías en tiempo real</li>
+                    <li><strong>Mensajería interna</strong> → mensajes privados/grupales</li>
+                    <li><strong>Wikis y diarios</strong> → creación colaborativa y reflexión</li>
+                    <li><strong>Grupos de trabajo</strong> → equipos dentro del curso</li>
+                </ul>
+                <p>Fortalece el aprendizaje social y la interacción horizontal.</p>
+            </div>
+        </div>
+
+        <!-- 3. Seguimiento y evaluación -->
+        <div class="card evaluacion" onclick="this.classList.toggle('active')">
+            <div class="card-header">
+                <i class="fas fa-chart-line"></i>
+                <div>Seguimiento y<br>Evaluación</div>
+                <div class="badge">Profesor + Alumno</div>
+            </div>
+            <div class="card-body">
+                <h3>Control del aprendizaje</h3>
+                <ul>
+                    <li>Cuestionarios y autoevaluaciones</li>
+                    <li>Tareas y entrega de archivos</li>
+                    <li>Reportes de actividad (quién hizo qué y cuándo)</li>
+                    <li>Calificaciones centralizadas y visibles</li>
+                    <li>Retroalimentación automática o manual</li>
+                </ul>
+                <p>Ayuda al docente a monitorear y al alumno a regular su progreso.</p>
+            </div>
+        </div>
+
+        <!-- 4. Administración y permisos -->
+        <div class="card administracion" onclick="this.classList.toggle('active')">
+            <div class="card-header">
+                <i class="fas fa-user-shield"></i>
+                <div>Administración<br>y Permisos</div>
+                <div class="badge">Admin + Profesor</div>
+            </div>
+            <div class="card-body">
+                <h3>Gestión del entorno</h3>
+                <ul>
+                    <li>Asignación de roles (admin, profesor, alumno)</li>
+                    <li>Matrícula y acceso con usuario/contraseña</li>
+                    <li>Activar/desactivar cursos</li>
+                    <li>Configuración general y personalización</li>
+                    <li>Seguridad y control de accesos</li>
+                </ul>
+                <p>Sin estas herramientas el LMS no podría funcionar organizadamente.</p>
+            </div>
+        </div>
+
+        <!-- 5. Herramientas complementarias -->
+        <div class="card complementarias" onclick="this.classList.toggle('active')">
+            <div class="card-header">
+                <i class="fas fa-stars"></i>
+                <div>Herramientas<br>Complementarias</div>
+                <div class="badge">Todos</div>
+            </div>
+            <div class="card-body">
+                <h3>Enriquecen la experiencia</h3>
+                <ul>
+                    <li><strong>Portafolio</strong> → evidencias de aprendizaje</li>
+                    <li><strong>Bloc de notas</strong> → apuntes personales</li>
+                    <li><strong>Buscador interno</strong> → localizar rápido cualquier contenido</li>
+                    <li>Calendario personal, recordatorios, etc.</li>
+                </ul>
+                <p>Pequeños detalles que marcan una gran diferencia.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Infografía interactiva creada por <strong>Dr. Kristian Armando Pineda Castillo</strong><br>
+        UPES Culiacán | 2025
+    </div>
+
+<div class="nav-buttons">
+<a href="integrado web1,2,3,4.html">⬅ Anterior</a>
+<a href="../index.html" class="secondary">Inicio</a>
+<a href="PVE_Tipos.html">Siguiente ➜</a>
+</div>
+</body>
+</html>

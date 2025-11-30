@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>EVA – Diseño y Gestión (Vargas-Murillo)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  /* ---- ESTILO GENERAL ---- */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: linear-gradient(135deg, #0f0f1f, #1b0033 40%, #000814);
+    color: #e0e6ff;
+    display: flex;
+  }
+
+  /* ---- MENÚ LATERAL ---- */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(255,255,255,0.15);
+    padding: 25px 20px;
+  }
+
+  .sidebar h2 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    color: #76a8ff;
+    letter-spacing: 1px;
+  }
+
+  .sidebar a {
+    display: block;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    color: #cdd5ff;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: 0.3s;
+  }
+
+  .sidebar a:hover {
+    background: rgba(118,168,255,0.15);
+    color: #ffffff;
+    transform: translateX(4px);
+  }
+
+  /* ---- CONTENIDO ---- */
+  .content {
+    margin-left: 280px;
+    padding: 40px 50px;
+    width: calc(100% - 280px);
+  }
+
+  h1.title {
+    font-size: 2.3rem;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #55e6ff, #8a7bff, #ff42a1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  h2.section-title {
+    margin: 30px 0 10px;
+    font-size: 1.7rem;
+    color: #8ab4ff;
+  }
+
+  /* ---- TARJETAS FUTURISTAS ---- */
+  .card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 25px;
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.1);
+    transition: 0.3s;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 25px rgba(0, 217, 255, 0.25);
+  }
+
+  /* ---- ACORDEONES ---- */
+  details {
+    background: rgba(255,255,255,0.05);
+    padding: 15px;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.18);
+    transition: 0.25s;
+  }
+
+  details summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: #9ecbff;
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+  }
+
+  details:hover {
+    background: rgba(118,168,255,0.12);
+  }
+
+  p, li {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-top: 10px;
+  }
+
+  ul li {
+    margin-left: 20px;
+  }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 900px) {
+    body { flex-direction: column; }
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .content { margin-left: 0; width: 100%; padding: 25px; }
+  }
+</style>
+
+<style>
+  body {
+    margin: 0;
+    padding-left: 260px;
+  }
+  #sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 250px;
+    background: #020617;
+    color: #e5e7eb;
+    padding: 18px 16px;
+    box-shadow: 4px 0 12px rgba(0,0,0,0.55);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    overflow-y: auto;
+    z-index: 999;
+  }
+  #sidebar .brand {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #fbbf24;
+  }
+  #sidebar h2 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #93c5fd;
+    margin: 12px 0 4px;
+  }
+  #sidebar a {
+    display: block;
+    padding: 6px 9px;
+    margin: 2px 0;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #e5e7eb;
+    font-size: 0.86rem;
+  }
+  #sidebar a:hover {
+    background: #1f2937;
+    color: #93c5fd;
+  }
+  #sidebar a.current {
+    background: #1d4ed8;
+    color: #e5e7eb;
+  }
+
+  #sidebar-toggle {
+    display: none;
+  }
+
+  .nav-buttons {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .nav-buttons a {
+    padding: 8px 14px;
+    border-radius: 999px;
+    text-decoration: none;
+    background: #1d4ed8;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .nav-buttons a.secondary {
+    background: #4b5563;
+  }
+  .nav-buttons a:hover {
+    filter: brightness(1.1);
+  }
+
+  @media (max-width: 900px) {
+    body {
+      padding-left: 0;
+    }
+    #sidebar {
+      width: 220px;
+      transform: translateX(-100%);
+      transition: transform .3s ease-in-out;
+    }
+    body.show-sidebar #sidebar {
+      transform: translateX(0);
+    }
+    #sidebar-toggle {
+      display: inline-block;
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      background: #1d4ed8;
+      color: #f9fafb;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+  }
+</style>
+<script>
+  function toggleSidebar(){
+    document.body.classList.toggle('show-sidebar');
+  }
+</script>
+
+</head>
+
+<body>
+<button id="sidebar-toggle" onclick="toggleSidebar()">☰ Menú</button>
+<div id="sidebar">
+<div class="brand">Plataformas Virtuales</div>
+<h2>Inicio</h2>
+<a href="../index.html" class="">Inicio del curso</a>
+<h2>Sesión 1</h2>
+<a href="../sesion1/WEB1,2,3,4.html" class="">Web 1.0–4.0</a>
+<a href="../sesion1/A2EjemplosWEB.html" class="">A2 Ejemplos Web</a>
+<a href="../sesion1/integrado web1,2,3,4.html" class="">Integrado Web 1–4</a>
+<a href="../sesion1/Herramientas_PVE.html" class="">Herramientas PVE</a>
+<a href="../sesion1/PVE_Tipos.html" class="">Tipos de PVE</a>
+<a href="../sesion1/Elección_PVE.html" class="">Elección de PVE</a>
+<a href="../sesion1/Estándares.html" class="">Estándares</a>
+<a href="../sesion1/A3Ejemplo_PVE.html" class="">A3 Ejemplo PVE</a>
+<a href="../sesion1/Línea_tiempo_PVE.html" class="">Línea de tiempo PVE</a>
+<a href="../sesion1/A4_reflexion_nube.html" class="">A4 Reflexión nube</a>
+<a href="../sesion1/Funcion_profesor.html" class="">Función profesor</a>
+<a href="../sesion1/Funcion_estudiante.html" class="">Función estudiante</a>
+<a href="../sesion1/A5_reflexion_infografia.html" class="">A5 Infografía</a>
+<a href="../sesion1/A6_Identificación_curso.html" class="">A6 Identificación curso</a>
+<h2>Sesión 2</h2>
+<a href="EVA_intro.html" class="current">EVA Introducción</a>
+<a href="DI_intro1.html" class="">DI Parte 1</a>
+<a href="DI_intro2_clasification.html" class="">DI Parte 2</a>
+<a href="A7_elabora_DI.html" class="">A7 Elaborar DI</a>
+<a href="A8_DI_integrados.html" class="">A8 DI integrados</a>
+<a href="A9_Desarrollo_curso.html" class="">A9 Desarrollo curso</a>
+<a href="ADDIE.html" class="">ADDIE interactivo</a>
+</div>
+
+
+<!-- MENU LATERAL -->
+<div class="sidebar">
+  <h2>Secciones</h2>
+  <a href="#intro">Introducción</a>
+  <a href="#eva">Entornos Virtuales</a>
+  <a href="#caracteristicas">Características</a>
+  <a href="#tipos">Tipos de EVA</a>
+  <a href="#elementos">Elementos del EVA</a>
+  <a href="#intervencion">Intervención Educativa</a>
+  <a href="#instruccional">Diseño Instruccional</a>
+  <a href="#profesor">Profesor Virtual</a>
+  <a href="#optimizacion">Optimización</a>
+</div>
+
+<!-- CONTENIDO -->
+<div class="content">
+
+<h1 class="title">Diseño y Gestión de Entornos Virtuales de Aprendizaje</h1>
+<div class="card">
+  <p><strong>Autor:</strong> Vargas-Murillo, Gabino  
+  <br><strong>Postdoctor en Epistemología e Investigación</strong>  
+  <br>Email: gpvargasmurillo@gmail.com</p>
+</div>
+
+<!-- INTRODUCCIÓN -->
+<h2 id="intro" class="section-title">Introducción</h2>
+<details open>
+  <summary>Resumen general</summary>
+  <p>El trabajo describe el diseño y gestión de los Entornos Virtuales de Aprendizaje (EVA), el rol del profesor virtual, el diseño instruccional, la intervención educativa, el uso de LMS y la optimización del proceso educativo mediante TIC.</p>
+</details>
+
+<!-- EVA -->
+<h2 id="eva" class="section-title">Entorno Virtual de Aprendizaje (EVA)</h2>
+<details>
+  <summary>Concepto</summary>
+  <p>Los EVA son ambientes mediados por TIC que gestionan contenidos virtuales y permiten la interacción docente-estudiante dentro del proceso enseñanza-aprendizaje.</p>
+</details>
+
+<!-- CARACTERISTICAS -->
+<h2 id="caracteristicas" class="section-title">Características de los EVA</h2>
+<details>
+  <summary>Cuadro general</summary>
+  <ul>
+    <li><strong>Interactividad</strong></li>
+    <li><strong>Flexibilidad</strong></li>
+    <li><strong>Escalabilidad</strong></li>
+    <li><strong>Estandarización</strong></li>
+    <li><strong>Usabilidad</strong></li>
+    <li><strong>Funcionalidad</strong></li>
+    <li><strong>Ubicuidad</strong></li>
+    <li><strong>Persuabilidad</strong></li>
+    <li><strong>Accesibilidad</strong></li>
+  </ul>
+</details>
+
+<!-- TIPOS -->
+<h2 id="tipos" class="section-title">Tipos de Entornos Virtuales</h2>
+<details>
+  <summary>Listado</summary>
+  <ul>
+    <li>E-Learning</li>
+    <li>Blogs</li>
+    <li>Wikis</li>
+    <li>Redes Sociales</li>
+  </ul>
+</details>
+
+<!-- ELEMENTOS -->
+<h2 id="elementos" class="section-title">Elementos del EVA</h2>
+<details>
+  <summary>Usuarios, especialistas y LMS</summary>
+  <ul>
+    <li>Usuarios (docentes y estudiantes)</li>
+    <li>Plan de estudios</li>
+    <li>Especialistas (docente, pedagogo, diseñador, ingeniero de sistemas)</li>
+    <li>Sistemas de Gestión de Aprendizaje (LMS)</li>
+  </ul>
+</details>
+
+<!-- INTERVENCIÓN -->
+<h2 id="intervencion" class="section-title">Intervención Educativa</h2>
+<details>
+  <summary>Actividades clave</summary>
+  <p>Incluye foros, wikis colaborativas, tareas virtuales y evaluaciones en línea orientadas a promover pensamiento crítico y construcción de conocimiento.</p>
+</details>
+
+<!-- DISEÑO INSTRUCCIONAL -->
+<h2 id="instruccional" class="section-title">Diseño Instruccional</h2>
+<details>
+  <summary>Modelos más usados</summary>
+  <ul>
+    <li>Gagné</li>
+    <li>Gagné & Briggs</li>
+    <li>ADDIE</li>
+    <li>ASSURE</li>
+    <li>Dick & Carey</li>
+    <li>Jonassen</li>
+    <li>Kemp</li>
+  </ul>
+</details>
+
+<!-- ========================= -->
+<!--  RED DISEÑOS INSTRUCCIONALES -->
+<!-- ========================= -->
+
+<h2 class="section-title" style="margin-top:40px;">Mapa Mental: Modelos de Diseño Instruccional</h2>
+
+<div id="network" style="width: 100%; height: 500px; background: rgba(255,255,255,0.05); border-radius: 12px; margin-bottom: 30px;"></div>
+
+<!-- Librería VisJS -->
+<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+<script>
+  // Nodos del mapa
+  const nodes = new vis.DataSet([
+    { id: 1, label: "Diseño\nInstruccional", shape: "star", color: "#7df9ff", size: 40, font: { size: 20, color: "#000" } },
+
+    { id: 2, label: "Gagné", color: "#ff6b6b", title: "Modelo de los 9 eventos del aprendizaje" },
+    { id: 3, label: "Gagné & Briggs", color: "#ffa36c", title: "Ampliación del modelo original con énfasis en estrategias" },
+    { id: 4, label: "ADDIE", color: "#ffd93d", title: "Análisis, Diseño, Desarrollo, Implementación y Evaluación" },
+    { id: 5, label: "ASSURE", color: "#9bff8c", title: "Modelo para integrar tecnología a la instrucción" },
+    { id: 6, label: "Dick & Carey", color: "#6afff4", title: "Modelo sistémico basado en metas y evaluación" },
+    { id: 7, label: "Jonassen", color: "#8ab4ff", title: "Aprendizaje constructivista centrado en problemas" },
+    { id: 8, label: "JVA", color: "#d38bff", title: "Modelo para ambientes digitales interactivos" },
+    { id: 9, label: "Action Mapping", color: "#ff80d5", title: "Enfoque práctico centrado en acciones y desempeño" },
+    { id: 10, label: "Kemp", color: "#ffb8ff", title: "Modelo holístico y flexible basado en ciclos" }
+  ]);
+
+  // Aristas
+  const edges = new vis.DataSet([
+    { from: 1, to: 2, color: { color: "#7df9ff" } },
+    { from: 1, to: 3, color: { color: "#7df9ff" } },
+    { from: 1, to: 4, color: { color: "#7df9ff" } },
+    { from: 1, to: 5, color: { color: "#7df9ff" } },
+    { from: 1, to: 6, color: { color: "#7df9ff" } },
+    { from: 1, to: 7, color: { color: "#7df9ff" } },
+    { from: 1, to: 8, color: { color: "#7df9ff" } },
+    { from: 1, to: 9, color: { color: "#7df9ff" } },
+    { from: 1, to: 10, color: { color: "#7df9ff" } }
+  ]);
+
+  // Configuración del mapa futurista
+  const container = document.getElementById("network");
+  const data = { nodes: nodes, edges: edges };
+
+  const options = {
+    interaction: { hover: true },
+    physics: {
+      enabled: true,
+      stabilization: false,
+      barnesHut: {
+        gravitationalConstant: -3500,
+        springLength: 180,
+        springConstant: 0.03
+      }
+    },
+    nodes: {
+      shape: "dot",
+      size: 25,
+      font: { color: "#ffffff", size: 16 },
+      borderWidth: 2,
+    },
+    edges: {
+      width: 2,
+      smooth: { type: "dynamic" }
+    }
+  };
+
+  new vis.Network(container, data, options);
+</script>
+
+
+<!-- PROFESOR VIRTUAL -->
+<h2 id="profesor" class="section-title">Profesor Virtual</h2>
+<details>
+  <summary>Funciones del docente en EVA</summary>
+  <ul>
+    <li>Técnica</li>
+    <li>Académica</li>
+    <li>Organizativa</li>
+    <li>Orientadora</li>
+    <li>Social</li>
+  </ul>
+</details>
+
+<!-- OPTIMIZACIÓN -->
+<h2 id="optimizacion" class="section-title">Optimización del EVA</h2>
+<details>
+  <summary>Aspectos clave</summary>
+  <p>Incluye recordatorios automáticos, seguimiento, reportes, auditorías, comunicación y herramientas tecnológicas que aumentan la eficiencia del entorno virtual.</p>
+</details>
+
+</div>
+<div class="nav-buttons">
+<a href="../index.html" class="secondary">Inicio</a>
+<a href="DI_intro1.html">Siguiente ➜</a>
+</div>
+</body>
+</html>

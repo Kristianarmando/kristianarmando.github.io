@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>ADDIE Interactivo – Morales-González et al. (2014)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Fuentes e íconos -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Exo+2:wght@300;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+:root{
+  --bg:#f4f7ff;
+  --card:#ffffff;
+  --primary:#0077ff;
+  --secondary:#ff00bb;
+  --accent:#00b894;
+  --text:#273043;
+  --danger:#ff4d4d;
+  --shadow:rgba(0,0,0,0.15);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Exo 2',sans-serif;
+  overflow-x:hidden;
+}
+
+header{
+  text-align:center;
+  padding:4rem 2rem;
+  background:white;
+  box-shadow:0 5px 30px var(--shadow);
+}
+
+h1{
+  font-family:'Orbitron',sans-serif;
+  font-size:3.2rem;
+  color:var(--primary);
+  margin-bottom:1rem;
+}
+
+.container{
+  max-width:1300px;
+  margin:0 auto;
+  padding:4rem 2rem;
+}
+
+/* ========================
+   ACORDEONES – ARREGLADOS
+   ======================== */
+
+.accordion{
+  margin:3rem 0;
+  background:white;
+  border-radius:18px;
+  overflow:hidden;
+  border:2px solid #dfe6ef;
+  box-shadow:0 8px 25px var(--shadow);
+}
+
+.acc-header{
+  padding:1.6rem 2rem;
+  cursor:pointer;
+  font-family:'Orbitron',sans-serif;
+  font-size:1.6rem;
+  color:var(--primary);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#f8faff;
+  transition:0.3s;
+}
+
+.acc-header:hover{
+  background:#eef5ff;
+}
+
+.acc-header i{
+  transition:transform 0.4s;
+  font-size:1.4rem;
+}
+
+.acc-content{
+  max-height:0;
+  overflow:hidden;
+  padding:0 2rem;
+  background:white;
+  transition:max-height 0.45s ease, padding 0.4s ease;
+}
+
+.acc-content.open{
+  max-height:1500px;
+  padding:2rem;
+}
+
+p, li{
+  font-size:1.25rem;
+  line-height:1.7;
+  margin:1rem 0;
+}
+
+ul{list-style:none;margin:1.5rem 0;}
+li{padding-left:1.6rem;position:relative;}
+li::before{
+  content:"▹";
+  position:absolute;
+  left:0;
+  color:var(--accent);
+  font-size:1.4rem;
+}
+
+/* ========================
+   TARJETAS ARRASTRABLES
+   ======================== */
+
+.draggable-flow{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:2rem;
+  margin:3rem 0;
+}
+
+.phase-card{
+  width:260px;
+  padding:1.8rem;
+  background:white;
+  border-radius:18px;
+  box-shadow:0 5px 20px var(--shadow);
+  cursor:grab;
+  user-select:none;
+  border:3px solid var(--color,var(--primary));
+  transition:0.3s;
+}
+
+.phase-card:active{
+  cursor:grabbing;
+  transform:scale(1.05);
+}
+
+.phase-card h3{
+  color:var(--color,var(--primary));
+  font-family:'Orbitron',sans-serif;
+  font-size:1.8rem;
+  margin-bottom:0.7rem;
+}
+
+.phase-card button{
+  background:var(--primary);
+  color:white;
+  border:none;
+  padding:0.6rem 1.4rem;
+  border-radius:30px;
+  cursor:pointer;
+  font-weight:bold;
+  margin-top:0.8rem;
+  transition:0.3s;
+}
+
+.phase-card button:hover{
+  background:var(--accent);
+  transform:scale(1.07);
+}
+
+/* ========================
+          MODAL
+   ======================== */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+}
+
+.modal-content{
+  background:white;
+  padding:2.5rem;
+  border-radius:22px;
+  max-width:800px;
+  width:90%;
+  position:relative;
+  box-shadow:0 10px 30px var(--shadow);
+  color:var(--text);
+}
+
+.close{
+  position:absolute;
+  top:10px;
+  right:15px;
+  font-size:2.5rem;
+  cursor:pointer;
+  color:var(--danger);
+}
+
+/* ========================
+         SLIDER
+   ======================== */
+
+.slider label{
+  font-size:1.3rem;
+  color:var(--primary);
+}
+
+.slider input[type=range]{
+  width:100%;
+  margin-top:1rem;
+}
+
+.slider-value{
+  margin-top:1rem;
+  color:var(--accent);
+  font-weight:bold;
+  font-size:1.4rem;
+}
+
+</style>
+
+<style>
+  body {
+    margin: 0;
+    padding-left: 260px;
+  }
+  #sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 250px;
+    background: #020617;
+    color: #e5e7eb;
+    padding: 18px 16px;
+    box-shadow: 4px 0 12px rgba(0,0,0,0.55);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    overflow-y: auto;
+    z-index: 999;
+  }
+  #sidebar .brand {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #fbbf24;
+  }
+  #sidebar h2 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #93c5fd;
+    margin: 12px 0 4px;
+  }
+  #sidebar a {
+    display: block;
+    padding: 6px 9px;
+    margin: 2px 0;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #e5e7eb;
+    font-size: 0.86rem;
+  }
+  #sidebar a:hover {
+    background: #1f2937;
+    color: #93c5fd;
+  }
+  #sidebar a.current {
+    background: #1d4ed8;
+    color: #e5e7eb;
+  }
+
+  #sidebar-toggle {
+    display: none;
+  }
+
+  .nav-buttons {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .nav-buttons a {
+    padding: 8px 14px;
+    border-radius: 999px;
+    text-decoration: none;
+    background: #1d4ed8;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .nav-buttons a.secondary {
+    background: #4b5563;
+  }
+  .nav-buttons a:hover {
+    filter: brightness(1.1);
+  }
+
+  @media (max-width: 900px) {
+    body {
+      padding-left: 0;
+    }
+    #sidebar {
+      width: 220px;
+      transform: translateX(-100%);
+      transition: transform .3s ease-in-out;
+    }
+    body.show-sidebar #sidebar {
+      transform: translateX(0);
+    }
+    #sidebar-toggle {
+      display: inline-block;
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      background: #1d4ed8;
+      color: #f9fafb;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+  }
+</style>
+<script>
+  function toggleSidebar(){
+    document.body.classList.toggle('show-sidebar');
+  }
+</script>
+
+</head>
+<body>
+<button id="sidebar-toggle" onclick="toggleSidebar()">☰ Menú</button>
+<div id="sidebar">
+<div class="brand">Plataformas Virtuales</div>
+<h2>Inicio</h2>
+<a href="../index.html" class="">Inicio del curso</a>
+<h2>Sesión 1</h2>
+<a href="../sesion1/WEB1,2,3,4.html" class="">Web 1.0–4.0</a>
+<a href="../sesion1/A2EjemplosWEB.html" class="">A2 Ejemplos Web</a>
+<a href="../sesion1/integrado web1,2,3,4.html" class="">Integrado Web 1–4</a>
+<a href="../sesion1/Herramientas_PVE.html" class="">Herramientas PVE</a>
+<a href="../sesion1/PVE_Tipos.html" class="">Tipos de PVE</a>
+<a href="../sesion1/Elección_PVE.html" class="">Elección de PVE</a>
+<a href="../sesion1/Estándares.html" class="">Estándares</a>
+<a href="../sesion1/A3Ejemplo_PVE.html" class="">A3 Ejemplo PVE</a>
+<a href="../sesion1/Línea_tiempo_PVE.html" class="">Línea de tiempo PVE</a>
+<a href="../sesion1/A4_reflexion_nube.html" class="">A4 Reflexión nube</a>
+<a href="../sesion1/Funcion_profesor.html" class="">Función profesor</a>
+<a href="../sesion1/Funcion_estudiante.html" class="">Función estudiante</a>
+<a href="../sesion1/A5_reflexion_infografia.html" class="">A5 Infografía</a>
+<a href="../sesion1/A6_Identificación_curso.html" class="">A6 Identificación curso</a>
+<h2>Sesión 2</h2>
+<a href="EVA_intro.html" class="">EVA Introducción</a>
+<a href="DI_intro1.html" class="">DI Parte 1</a>
+<a href="DI_intro2_clasification.html" class="">DI Parte 2</a>
+<a href="A7_elabora_DI.html" class="">A7 Elaborar DI</a>
+<a href="A8_DI_integrados.html" class="">A8 DI integrados</a>
+<a href="A9_Desarrollo_curso.html" class="">A9 Desarrollo curso</a>
+<a href="ADDIE.html" class="current">ADDIE interactivo</a>
+</div>
+
+
+<header>
+  <h1>Modelo ADDIE – Interactivo</h1>
+  <p style="font-size:1.45rem;">Morales-González et al. (2014)</p>
+</header>
+
+<div class="container">
+
+<!-- ======================= -->
+<!--     ACORDEÓN 1          -->
+<!-- ======================= -->
+
+<div class="accordion">
+  <div class="acc-header">
+    <span>1. Naturaleza, Origen y Fundamentos Teóricos</span>
+    <i class="fas fa-chevron-down"></i>
+  </div>
+
+  <div class="acc-content">
+    <p>ADDIE es el modelo más utilizado por su claridad y estructura sistemática.</p>
+    <ul>
+      <li>Modelo <strong>genérico</strong>: pasos base del diseño instruccional</li>
+      <li>Origen: 1970 – formalización en 1980</li>
+      <li>Basado en Teoría de Sistemas y Procesamiento de Información</li>
+    </ul>
+
+    <div class="slider">
+      <label>Evolución de ADDIE</label>
+      <input type="range" min="1970" max="2025" value="2025" id="hist">
+      <div class="slider-value" id="hist-value">Año 2025 – Enfoque digital híbrido</div>
+    </div>
+
+  </div>
+</div>
+
+<h2 style="text-align:center;font-size:2.3rem;margin-top:4rem;color:var(--primary);">
+  Fases de ADDIE – Arrastra y Organiza
+</h2>
+
+<div class="draggable-flow" id="flow">
+  <div class="phase-card" style="--color:#0077ff;" draggable="true">
+    <h3>1. ANÁLISIS</h3>
+    <p>Diagnóstico • Perfil • Recursos</p>
+    <button onclick="openModal('análisis')">+ Detalles</button>
+  </div>
+
+  <div class="phase-card" style="--color:#ff00bb;" draggable="true">
+    <h3>2. DISEÑO</h3>
+    <p>Objetivos • Estrategias • Evaluación</p>
+    <button onclick="openModal('diseño')">+ Detalles</button>
+  </div>
+
+  <div class="phase-card" style="--color:#ffd000;" draggable="true">
+    <h3>3. DESARROLLO</h3>
+    <p>Materiales • Validación</p>
+    <button onclick="openModal('desarrollo')">+ Detalles</button>
+  </div>
+
+  <div class="phase-card" style="--color:#ff4d4d;" draggable="true">
+    <h3>4. IMPLEMENTACIÓN</h3>
+    <p>Capacitación • Ejecución</p>
+    <button onclick="openModal('implementación')">+ Detalles</button>
+  </div>
+
+  <div class="phase-card" style="--color:#00b894;" draggable="true">
+    <h3>5. EVALUACIÓN</h3>
+    <p>Formativa • Sumativa</p>
+    <button onclick="openModal('evaluación')">+ Detalles</button>
+  </div>
+</div>
+
+<!-- ======================= -->
+<!--     ACORDEÓN 2          -->
+<!-- ======================= -->
+
+<div class="accordion">
+  <div class="acc-header">
+    <span>Enfoques Pedagógicos</span>
+    <i class="fas fa-chevron-down"></i>
+  </div>
+  <div class="acc-content">
+    <ul>
+      <li>Constructivismo: aprendizaje activo</li>
+      <li>Conectivismo: redes de conocimiento</li>
+      <li>Aprendizaje situado y colaborativo</li>
+    </ul>
+  </div>
+</div>
+
+<div class="accordion">
+  <div class="acc-header">
+    <span>Limitaciones del Modelo</span>
+    <i class="fas fa-chevron-down"></i>
+  </div>
+  <div class="acc-content">
+    <ul>
+      <li>Requiere capacitación docente</li>
+      <li>Puede volverse rígido si no se adapta al contexto</li>
+      <li>Demanda tiempo y recursos</li>
+    </ul>
+  </div>
+</div>
+
+<div class="accordion">
+  <div class="acc-header">
+    <span>Conclusiones Finales</span>
+    <i class="fas fa-chevron-down"></i>
+  </div>
+  <div class="acc-content">
+    <p>ADDIE sigue siendo un marco sólido, flexible y adaptable a nuevas tecnologías.</p>
+  </div>
+</div>
+
+</div>
+
+<!-- ======================= -->
+<!--         MODAL           -->
+<!-- ======================= -->
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <span class="close" onclick="modal.style.display='none'">×</span>
+    <h2 id="modal-title" style="color:var(--primary);"></h2>
+    <p id="modal-desc"></p>
+  </div>
+</div>
+
+<script>
+/* ============================
+        ACORDEONES FIXED
+   ============================ */
+document.querySelectorAll(".acc-header").forEach(head=>{
+  head.addEventListener("click", ()=>{
+    const content = head.nextElementSibling;
+    const icon = head.querySelector("i");
+
+    content.classList.toggle("open");
+    icon.classList.toggle("fa-chevron-down");
+    icon.classList.toggle("fa-chevron-up");
+  });
+});
+
+/* ============================
+        SLIDER HISTÓRICO
+   ============================ */
+document.getElementById("hist").addEventListener("input", e=>{
+  const y = e.target.value;
+  let fase =
+    y < 1990 ? "Diseño instruccional clásico" :
+    y < 2005 ? "Era digital y LMS" :
+    "Educación híbrida y conectivista";
+
+  document.getElementById("hist-value").textContent =
+    `Año ${y} – ${fase}`;
+});
+
+/* ============================
+           MODAL
+   ============================ */
+const modal = document.getElementById("modal");
+const modalTitle = document.getElementById("modal-title");
+const modalDesc = document.getElementById("modal-desc");
+
+const modalData = {
+  análisis: {
+    title:"Fase Análisis",
+    desc:"Identificación de brechas de aprendizaje, análisis del contexto, perfil del alumnado y recursos disponibles."
+  },
+  diseño: {
+    title:"Fase Diseño",
+    desc:"Formulación de objetivos, selección de estrategias, planificación de evaluaciones y secuenciación didáctica."
+  },
+  desarrollo: {
+    title:"Fase Desarrollo",
+    desc:"Producción y validación de materiales, prototipado y ajustes basados en pruebas piloto."
+  },
+  implementación: {
+    title:"Fase Implementación",
+    desc:"Capacitación docente, preparación de ambientes y puesta en marcha del curso o programa."
+  },
+  evaluación: {
+    title:"Fase Evaluación",
+    desc:"Evaluación formativa y sumativa, retroalimentación continua y cierre del ciclo para mejorar futuras implementaciones."
+  }
+};
+
+function openModal(phase){
+  modalTitle.textContent = modalData[phase].title;
+  modalDesc.textContent = modalData[phase].desc;
+  modal.style.display = "flex";
+}
+
+/* ============================
+        DRAG & DROP FLOW
+   ============================ */
+let dragged = null;
+
+document.querySelectorAll(".phase-card").forEach(card=>{
+  card.addEventListener("dragstart", e=>{
+    dragged = card;
+  });
+
+  card.addEventListener("dragover", e=>{
+    e.preventDefault();
+  });
+
+  card.addEventListener("drop", e=>{
+    e.preventDefault();
+    if(e.target.closest(".phase-card") && e.target.closest(".phase-card") !== dragged){
+      const target = e.target.closest(".phase-card");
+      const flow = document.getElementById("flow");
+      flow.insertBefore(dragged, target.nextSibling);
+    }
+  });
+});
+</script>
+
+<div class="nav-buttons">
+<a href="A9_Desarrollo_curso.html">⬅ Anterior</a>
+<a href="../index.html" class="secondary">Inicio</a>
+</div>
+</body>
+</html>

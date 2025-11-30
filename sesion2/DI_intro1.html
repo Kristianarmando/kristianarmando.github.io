@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evolución del Diseño Instruccional | Brown & Green + Gros Salvat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Exo+2:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #0f0f1e;
+            --card-bg: rgba(20,20,40,0.8);
+            --text: #e0e7ff;
+            --glow-blue: #00d4ff;
+            --glow-purple: #c84bff;
+            --glow-green: #00ff9d;
+            --glow-yellow: #ffe600;
+            --glow-red: #ff2e63;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Exo 2', sans-serif;
+            min-height: 100vh;
+            background: radial-gradient(circle at top left, #1a0033, #000);
+            overflow-x: hidden;
+        }
+        header {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #1a0033, #000);
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            background: linear-gradient(90deg, #00d4ff, #c84bff, #00ff9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(0,212,255,0.6);
+        }
+        .subtitle {
+            font-size: 1.4rem;
+            margin-top: 1rem;
+            opacity: 0.9;
+        }
+
+        .timeline {
+            max-width: 1400px;
+            margin: 4rem auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            padding: 2rem;
+        }
+
+        .flip-card {
+            perspective: 1000px;
+            height: 420px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transform-style: preserve-3d;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .flip-card-front {
+            background: var(--card-bg);
+            border: 2px solid var(--color, #00d4ff);
+            box-shadow: 0 0 40px var(--color);
+        }
+        .flip-card-back {
+            background: linear-gradient(135deg, var(--color), #000);
+            color: white;
+            transform: rotateY(180deg);
+            border: 3px solid white;
+        }
+
+        .era-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px currentColor;
+        }
+        .era-icon {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 20px currentColor);
+        }
+
+        .key-points {
+            margin-top: 1.5rem;
+            text-align: left;
+            font-size: 1.05rem;
+        }
+        .key-points li {
+            margin: 0.8rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .key-points li::before {
+            content: "▹";
+            color: var(--color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 4rem;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+    </style>
+
+<style>
+  body {
+    margin: 0;
+    padding-left: 260px;
+  }
+  #sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 250px;
+    background: #020617;
+    color: #e5e7eb;
+    padding: 18px 16px;
+    box-shadow: 4px 0 12px rgba(0,0,0,0.55);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    overflow-y: auto;
+    z-index: 999;
+  }
+  #sidebar .brand {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #fbbf24;
+  }
+  #sidebar h2 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #93c5fd;
+    margin: 12px 0 4px;
+  }
+  #sidebar a {
+    display: block;
+    padding: 6px 9px;
+    margin: 2px 0;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #e5e7eb;
+    font-size: 0.86rem;
+  }
+  #sidebar a:hover {
+    background: #1f2937;
+    color: #93c5fd;
+  }
+  #sidebar a.current {
+    background: #1d4ed8;
+    color: #e5e7eb;
+  }
+
+  #sidebar-toggle {
+    display: none;
+  }
+
+  .nav-buttons {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .nav-buttons a {
+    padding: 8px 14px;
+    border-radius: 999px;
+    text-decoration: none;
+    background: #1d4ed8;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .nav-buttons a.secondary {
+    background: #4b5563;
+  }
+  .nav-buttons a:hover {
+    filter: brightness(1.1);
+  }
+
+  @media (max-width: 900px) {
+    body {
+      padding-left: 0;
+    }
+    #sidebar {
+      width: 220px;
+      transform: translateX(-100%);
+      transition: transform .3s ease-in-out;
+    }
+    body.show-sidebar #sidebar {
+      transform: translateX(0);
+    }
+    #sidebar-toggle {
+      display: inline-block;
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      background: #1d4ed8;
+      color: #f9fafb;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+  }
+</style>
+<script>
+  function toggleSidebar(){
+    document.body.classList.toggle('show-sidebar');
+  }
+</script>
+
+</head>
+<body>
+<button id="sidebar-toggle" onclick="toggleSidebar()">☰ Menú</button>
+<div id="sidebar">
+<div class="brand">Plataformas Virtuales</div>
+<h2>Inicio</h2>
+<a href="../index.html" class="">Inicio del curso</a>
+<h2>Sesión 1</h2>
+<a href="../sesion1/WEB1,2,3,4.html" class="">Web 1.0–4.0</a>
+<a href="../sesion1/A2EjemplosWEB.html" class="">A2 Ejemplos Web</a>
+<a href="../sesion1/integrado web1,2,3,4.html" class="">Integrado Web 1–4</a>
+<a href="../sesion1/Herramientas_PVE.html" class="">Herramientas PVE</a>
+<a href="../sesion1/PVE_Tipos.html" class="">Tipos de PVE</a>
+<a href="../sesion1/Elección_PVE.html" class="">Elección de PVE</a>
+<a href="../sesion1/Estándares.html" class="">Estándares</a>
+<a href="../sesion1/A3Ejemplo_PVE.html" class="">A3 Ejemplo PVE</a>
+<a href="../sesion1/Línea_tiempo_PVE.html" class="">Línea de tiempo PVE</a>
+<a href="../sesion1/A4_reflexion_nube.html" class="">A4 Reflexión nube</a>
+<a href="../sesion1/Funcion_profesor.html" class="">Función profesor</a>
+<a href="../sesion1/Funcion_estudiante.html" class="">Función estudiante</a>
+<a href="../sesion1/A5_reflexion_infografia.html" class="">A5 Infografía</a>
+<a href="../sesion1/A6_Identificación_curso.html" class="">A6 Identificación curso</a>
+<h2>Sesión 2</h2>
+<a href="EVA_intro.html" class="">EVA Introducción</a>
+<a href="DI_intro1.html" class="current">DI Parte 1</a>
+<a href="DI_intro2_clasification.html" class="">DI Parte 2</a>
+<a href="A7_elabora_DI.html" class="">A7 Elaborar DI</a>
+<a href="A8_DI_integrados.html" class="">A8 DI integrados</a>
+<a href="A9_Desarrollo_curso.html" class="">A9 Desarrollo curso</a>
+<a href="ADDIE.html" class="">ADDIE interactivo</a>
+</div>
+
+
+<header>
+    <h1>EVOLUCIÓN DEL DISEÑO INSTRUCCIONAL</h1>
+    <p class="subtitle">De Skinner al DI Contemporáneo | Síntesis integrada Brown & Green (2016) + Gros Salvat (2007)</p>
+</header>
+
+<div class="timeline">
+
+    <!-- 1. Conductismo - Skinner -->
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front" style="--color:#ff2e63;">
+                <i class="era-icon fas fa-brain" style="color:#ff2e63;"></i>
+                <div class="era-title">Conductismo</div>
+                <p><strong>Skinner (1950s-60s)</strong><br>Enseñanza Programada</p>
+            </div>
+            <div class="flip-card-back">
+                <h3>Los 4 Pilares de Skinner (Gros, 2007)</h3>
+                <ul class="key-points">
+                    <li>Objetivos terminales observables</li>
+                    <li>Secuenciación: simple → complejo</li>
+                    <li>Análisis de tareas y subtareas</li>
+                    <li>Refuerzo inmediato y continuo</li>
+                </ul>
+                <p><em>→ Base de la EAO y software tutorial actual</em></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Gagné - Puente -->
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front" style="--color:#00d4ff;">
+                <i class="era-icon fas fa-exchange-alt" style="color:#00d4ff;"></i>
+                <div class="era-title">Gagné</div>
+                <p><strong>Puente Conductismo → Cognitivismo</strong></p>
+            </div>
+            <div class="flip-card-back">
+                <h3>9 Eventos de la Instrucción</h3>
+                <ul class="key-points" style="font-size:0.95rem;">
+                    <li>1. Informar objetivos</li>
+                    <li>2. Dirigir atención</li>
+                    <li>3. Activar conocimientos previos</li>
+                    <li>4. Presentar estímulos</li>
+                    <li>5. Guiar el aprendizaje</li>
+                    <li>6. Elicitar actuación</li>
+                    <li>7. Retroalimentación</li>
+                    <li>8. Evaluar</li>
+                    <li>9. Retención y transferencia</li>
+                </ul>
+                <p><em>→ Usado en LMS, microlearning y sistemas adaptativos</em></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. EAO -->
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front" style="--color:#ffd000;">
+                <i class="era-icon fas fa-desktop" style="color:#ffd000;"></i>
+                <div class="era-title">EAO</div>
+                <p><strong>Enseñanza Asistida por Ordenador</strong><br>(1970s-80s)</p>
+            </div>
+            <div class="flip-card-back">
+                <h3>Características</h3>
+                <ul class="key-points">
+                    <li>Software lineal o ramificado</li>
+                    <li>Ejercicios estructurados</li>
+                    <li>Retroalimentación inmediata</li>
+                    <li>Control total del progreso</li>
+                </ul>
+                <p><em>→ Heredero directo de Skinner</em></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Constructivismo - Papert -->
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front" style="--color:#00ff9d;">
+                <i class="era-icon fas fa-lightbulb" style="color:#00ff9d;"></i>
+                <div class="era-title">Constructivismo</div>
+                <p><strong>Papert y las "Tecnologías Vacías"</strong></p>
+            </div>
+            <div class="flip-card-back">
+                <h3>Dos paradigmas tecnológicos</h3>
+                <ul class="key-points">
+                    <li><strong>Tecnologías llenas</strong>: contenido fijo, recorrido lineal</li>
+                    <li><strong>Tecnologías vacías</strong>: herramientas para crear, explorar, pensar</li>
+                </ul>
+                <p style="margin-top:1rem;"><em>“El ordenador debe ayudar a pensar, no a ser pensado por él” – Papert</em></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. DI Contemporáneo -->
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front" style="--color:#c84bff;">
+                <i class="era-icon fas fa-infinity" style="color:#c84bff;"></i>
+                <div class="era-title">DI Actual</div>
+                <p><strong>Brown & Green (2016)</strong><br>Eclecticismo + Iteración</p>
+            </div>
+            <div class="flip-card-back">
+                <h3>Características del DI postmoderno</h3>
+                <ul class="key-points">
+                    <li>No hay un modelo único</li>
+                    <li>Combinación flexible de teorías</li>
+                    <li>Diseño iterativo y prototipado rápido</li>
+                    <li>Integración de IA, gamificación, colaboración</li>
+                    <li>Enfoque en contextos reales y significativos</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. Síntesis Final -->
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front" style="--color:#ffe600;">
+                <i class="era-icon fas fa-circle-nodes" style="color:#ffe600;"></i>
+                <div class="era-title">Síntesis</div>
+                <p><strong>De Skinner al EVA actual</strong></p>
+            </div>
+            <div class="flip-card-back">
+                <h3>Evolución en una frase:</h3>
+                <p style="font-size:1.4rem; margin:1.5rem 0; font-weight:700;">
+                    Del refuerzo de respuestas observables<br>
+                    → al acompañamiento de construcciones mentales significativas<br>
+                    → hacia la co-creación flexible de experiencias auténticas
+                </p>
+                <p><em>El Diseño Instruccional ya no prescribe: habilita, conecta y amplifica el aprendizaje humano.</em></p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>Infografía interactiva creada con ❤️ para amantes del Diseño Instruccional | 2025</p>
+</footer>
+
+<div class="nav-buttons">
+<a href="EVA_intro.html">⬅ Anterior</a>
+<a href="../index.html" class="secondary">Inicio</a>
+<a href="DI_intro2_clasification.html">Siguiente ➜</a>
+</div>
+</body>
+</html>

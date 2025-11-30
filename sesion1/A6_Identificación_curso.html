@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>A6. Identificación de curso a desarrollar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * { 
+      box-sizing: border-box; 
+      word-break: normal;
+      overflow-wrap: break-word;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at top left, #0f9d58, #0b3d3b);
+      color: #f9f9f9;
+    }
+
+    .slide {
+      width: 96%;
+      max-width: 1300px;
+      background: #0f172a;
+      border-radius: 18px;
+      padding: 24px 32px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      padding-bottom: 10px;
+    }
+
+    .header-left h1 {
+      margin: 0;
+      font-size: 1.55rem;
+      color: #a5b4fc;
+      white-space: normal;
+    }
+
+    .header-left h2 {
+      margin: 4px 0 0;
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: #e5e7eb;
+      white-space: normal;
+    }
+
+    .tag {
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      background: rgba(34,197,94,0.12);
+      color: #bbf7d0;
+      border: 1px solid rgba(34,197,94,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+    }
+
+    @media (max-width: 900px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+      body {
+        align-items: flex-start;
+        padding-top: 10px;
+      }
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+      color: #bfdbfe;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .box {
+      background: rgba(15,23,42,0.9);
+      border-radius: 14px;
+      padding: 14px 16px;
+      border: 1px solid rgba(148,163,184,0.35);
+    }
+
+    .box p {
+      margin: 0 0 10px;
+      font-size: 0.95rem;
+      color: #e5e7eb;
+      white-space: normal;
+    }
+
+    .list {
+      padding-left: 18px;
+      font-size: 0.93rem;
+      color: #e5e7eb;
+    }
+
+    .list li { margin-bottom: 5px; }
+
+    .highlight {
+      color: #22c55e;
+      font-weight: 600;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      background: rgba(59,130,246,0.18);
+      color: #dbeafe;
+      border: 1px solid rgba(59,130,246,0.6);
+      margin-right: 6px;
+      margin-top: 4px;
+    }
+
+    .template-block {
+      background: rgba(15,23,42,0.95);
+      border-radius: 10px;
+      padding: 10px 12px;
+      border: 1px dashed rgba(148,163,184,0.5);
+      font-size: 0.88rem;
+      line-height: 1.55;
+      white-space: normal;
+    }
+  </style>
+
+<style>
+  body {
+    margin: 0;
+    padding-left: 260px;
+  }
+  #sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 250px;
+    background: #020617;
+    color: #e5e7eb;
+    padding: 18px 16px;
+    box-shadow: 4px 0 12px rgba(0,0,0,0.55);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    overflow-y: auto;
+    z-index: 999;
+  }
+  #sidebar .brand {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #fbbf24;
+  }
+  #sidebar h2 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #93c5fd;
+    margin: 12px 0 4px;
+  }
+  #sidebar a {
+    display: block;
+    padding: 6px 9px;
+    margin: 2px 0;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #e5e7eb;
+    font-size: 0.86rem;
+  }
+  #sidebar a:hover {
+    background: #1f2937;
+    color: #93c5fd;
+  }
+  #sidebar a.current {
+    background: #1d4ed8;
+    color: #e5e7eb;
+  }
+
+  #sidebar-toggle {
+    display: none;
+  }
+
+  .nav-buttons {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .nav-buttons a {
+    padding: 8px 14px;
+    border-radius: 999px;
+    text-decoration: none;
+    background: #1d4ed8;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .nav-buttons a.secondary {
+    background: #4b5563;
+  }
+  .nav-buttons a:hover {
+    filter: brightness(1.1);
+  }
+
+  @media (max-width: 900px) {
+    body {
+      padding-left: 0;
+    }
+    #sidebar {
+      width: 220px;
+      transform: translateX(-100%);
+      transition: transform .3s ease-in-out;
+    }
+    body.show-sidebar #sidebar {
+      transform: translateX(0);
+    }
+    #sidebar-toggle {
+      display: inline-block;
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      background: #1d4ed8;
+      color: #f9fafb;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+  }
+</style>
+<script>
+  function toggleSidebar(){
+    document.body.classList.toggle('show-sidebar');
+  }
+</script>
+
+</head>
+
+<body>
+<button id="sidebar-toggle" onclick="toggleSidebar()">☰ Menú</button>
+<div id="sidebar">
+<div class="brand">Plataformas Virtuales</div>
+<h2>Inicio</h2>
+<a href="../index.html" class="">Inicio del curso</a>
+<h2>Sesión 1</h2>
+<a href="WEB1,2,3,4.html" class="">Web 1.0–4.0</a>
+<a href="A2EjemplosWEB.html" class="">A2 Ejemplos Web</a>
+<a href="integrado web1,2,3,4.html" class="">Integrado Web 1–4</a>
+<a href="Herramientas_PVE.html" class="">Herramientas PVE</a>
+<a href="PVE_Tipos.html" class="">Tipos de PVE</a>
+<a href="Elección_PVE.html" class="">Elección de PVE</a>
+<a href="Estándares.html" class="">Estándares</a>
+<a href="A3Ejemplo_PVE.html" class="">A3 Ejemplo PVE</a>
+<a href="Línea_tiempo_PVE.html" class="">Línea de tiempo PVE</a>
+<a href="A4_reflexion_nube.html" class="">A4 Reflexión nube</a>
+<a href="Funcion_profesor.html" class="">Función profesor</a>
+<a href="Funcion_estudiante.html" class="">Función estudiante</a>
+<a href="A5_reflexion_infografia.html" class="">A5 Infografía</a>
+<a href="A6_Identificación_curso.html" class="current">A6 Identificación curso</a>
+<h2>Sesión 2</h2>
+<a href="../sesion2/EVA_intro.html" class="">EVA Introducción</a>
+<a href="../sesion2/DI_intro1.html" class="">DI Parte 1</a>
+<a href="../sesion2/DI_intro2_clasification.html" class="">DI Parte 2</a>
+<a href="../sesion2/A7_elabora_DI.html" class="">A7 Elaborar DI</a>
+<a href="../sesion2/A8_DI_integrados.html" class="">A8 DI integrados</a>
+<a href="../sesion2/A9_Desarrollo_curso.html" class="">A9 Desarrollo curso</a>
+<a href="../sesion2/ADDIE.html" class="">ADDIE interactivo</a>
+</div>
+
+  <div class="slide">
+    <div class="header">
+      <div class="header-left">
+        <h1>A6. Identificación de curso a desarrollar</h1>
+        <h2>Curso y avance del Reporte Final de PVE (hasta el punto 2)</h2>
+      </div>
+      <div class="tag">Actividad de proyecto</div>
+    </div>
+
+    <div class="content">
+
+      <!-- Columna 1 -->
+      <div class="box">
+        <h3>Actividad A6 · Identificación del curso</h3>
+        <p>Identificar el <span class="highlight">curso</span> que desarrollarás en tu miniplataforma o app educativa.</p>
+        <p>Define:</p>
+        <ul class="list">
+          <li><strong>Título del curso</strong></li>
+          <li><strong>Tema de enseñanza–aprendizaje</strong></li>
+          <li><strong>Objetivo general</strong></li>
+          <li><strong>Público al que va dirigido</strong></li>
+          <li><strong>Tipo de solución</strong>: miniplataforma o app</li>
+        </ul>
+      </div>
+
+      <!-- Columna 2 -->
+      <div class="box">
+        <h3>Plantilla del reporte final (avance hasta el punto 2)</h3>
+
+        <div class="template-block">
+Título del curso:
+Ejemplo: “Curso de Investigación-Acción en Educación en Moodle”
+
+Fecha de elaboración: (Se actualiza con cada entrega)
+
+1. Datos generales del curso
+• Nombre del curso:
+• Nombres completos de estudiantes y correo electrónico:
+• Facilitador: Dr. Kristian Armando Pineda Castillo
+• Institución:
+• Programa / Doctorado:
+• Grupo:
+• Plataforma utilizada:
+• Nivel educativo al que se dirige:
+• Duración estimada:
+• Modalidad:
+
+2. Fundamentación y objetivos
+2.1 Fundamentación pedagógica y tecnológica
+(Borre esta información y escriba….) Describir brevemente por qué es pertinente este curso, qué problema atiende, y cómo se relaciona con las PVE/EVA, citando algunas lecturas del curso.
+        </div>
+
+        <span class="pill">Formato Word/PDF</span>
+        <span class="pill">Avance estructural del reporte</span>
+
+      </div>
+    </div>
+  </div>
+<div class="nav-buttons">
+<a href="A5_reflexion_infografia.html">⬅ Anterior</a>
+<a href="../index.html" class="secondary">Inicio</a>
+</div>
+</body>
+</html>

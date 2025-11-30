@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evolución de la Web 1.0 → 4.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --web1: #2563eb;
+            --web2: #16a34a;
+            --web3: #7c3aed;
+            --web4: #dc2626;
+            --bg: #0f172a;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: #e2e8f0;
+            line-height: 1.7;
+        }
+        header {
+            height: 100vh;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 70%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(3rem, 8vw, 7rem);
+            background: linear-gradient(90deg, #60a5fa, #c084fc, #f472b6, #fb923c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 4px;
+        }
+        .hero-subtitle { font-size: 1.5rem; max-width: 800px; opacity: 0.9; margin: 20px 0; }
+        .scroll-hint { position: absolute; bottom: 30px; font-size: 2.5rem; animation: bounce 2s infinite; color: #60a5fa; }
+        @keyframes bounce { 0%,100% {transform: translateY(0);} 50% {transform: translateY(-15px);} }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+
+        /* LÍNEA DE TIEMPO 100% ANTISUPERPOSICIÓN */
+        .timeline {
+            padding: 150px 0;
+            position: relative;
+            min-height: 3000px; /* Altura mínima garantizada */
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 8px;
+            background: linear-gradient(to bottom, 
+                var(--web1) 0%, var(--web1) 25%,
+                var(--web2) 25%, var(--web2) 50%,
+                var(--web3) 50%, var(--web3) 75%,
+                var(--web4) 75%, var(--web4) 100%);
+            top: 0; bottom: 0; left: 50%;
+            transform: translateX(-50%);
+            border-radius: 4px;
+            z-index: 1;
+        }
+
+        .timeline-item {
+            position: absolute;
+            width: 100%;
+            left: 0;
+        }
+        .timeline-item:nth-child(1) { top: 0; }
+        .timeline-item:nth-child(2) { top: 750px; }
+        .timeline-item:nth-child(3) { top: 1500px; }
+        .timeline-item:nth-child(4) { top: 2250px; }
+
+        .timeline-year {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 140px;
+            background: white;
+            color: #0f172a;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.9rem;
+            box-shadow: 0 0 50px rgba(255,255,255,0.5);
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        .timeline-year::after {
+            content: attr(data-label);
+            position: absolute;
+            top: -60px;
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+            pointer-events: none;
+            backdrop-filter: blur(10px);
+        }
+        .timeline-year:hover::after { opacity: 1; }
+
+        .web1 .timeline-year { background: var(--web1); color: white; }
+        .web2 .timeline-year { background: var(--web2); color: white; }
+        .web3 .timeline-year { background: var(--web3); color: white; }
+        .web4 .timeline-year { background: var(--web4); color: white; }
+
+        .timeline-content {
+            width: 44%;
+            background: rgba(15,23,42,0.96);
+            padding: 45px;
+            border-radius: 30px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.15);
+            opacity: 0;
+            transform: translateY(60px);
+        }
+        .timeline-content.left { float: left; margin-left: 5%; }
+        .timeline-content.right { float: right; margin-right: 5%; text-align: right; }
+
+        /* Responsive perfecto */
+        @media (max-width: 968px) {
+            .timeline-content { 
+                width: 90%; 
+                float: none !important;
+                margin: 80px auto 0 !important;
+                text-align: center;
+            }
+            .timeline-content.left,
+            .timeline-content.right { text-align: center; }
+        }
+
+        .lms-section { padding: 160px 0; background: rgba(15,23,42,0.5); }
+        .section-title {
+            text-align: center;
+            font-size: 3.2rem;
+            margin-bottom: 100px;
+            background: linear-gradient(to right, #60a5fa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .lms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+        .lms-card {
+            background: rgba(255,255,255,0.07);
+            border-radius: 28px;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+        .lms-card:hover { transform: translateY(-15px); box-shadow: 0 30px 70px rgba(0,0,0,0.7); }
+        .lms-header {
+            padding: 40px;
+            color: white;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .lms-body {
+            padding: 0 40px 40px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.7s ease;
+            background: rgba(15,23,42,0.98);
+            line-height: 1.9;
+        }
+        .lms-card.active .lms-body { max-height: 800px; padding: 40px; }
+
+        footer {
+            text-align: center;
+            padding: 120px 20px;
+            background: rgba(0,0,0,0.7);
+            font-size: 1rem;
+            color: #94a3b8;
+        }
+    </style>
+
+<style>
+  body {
+    margin: 0;
+    padding-left: 260px;
+  }
+  #sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 250px;
+    background: #020617;
+    color: #e5e7eb;
+    padding: 18px 16px;
+    box-shadow: 4px 0 12px rgba(0,0,0,0.55);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    overflow-y: auto;
+    z-index: 999;
+  }
+  #sidebar .brand {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #fbbf24;
+  }
+  #sidebar h2 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #93c5fd;
+    margin: 12px 0 4px;
+  }
+  #sidebar a {
+    display: block;
+    padding: 6px 9px;
+    margin: 2px 0;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #e5e7eb;
+    font-size: 0.86rem;
+  }
+  #sidebar a:hover {
+    background: #1f2937;
+    color: #93c5fd;
+  }
+  #sidebar a.current {
+    background: #1d4ed8;
+    color: #e5e7eb;
+  }
+
+  #sidebar-toggle {
+    display: none;
+  }
+
+  .nav-buttons {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .nav-buttons a {
+    padding: 8px 14px;
+    border-radius: 999px;
+    text-decoration: none;
+    background: #1d4ed8;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .nav-buttons a.secondary {
+    background: #4b5563;
+  }
+  .nav-buttons a:hover {
+    filter: brightness(1.1);
+  }
+
+  @media (max-width: 900px) {
+    body {
+      padding-left: 0;
+    }
+    #sidebar {
+      width: 220px;
+      transform: translateX(-100%);
+      transition: transform .3s ease-in-out;
+    }
+    body.show-sidebar #sidebar {
+      transform: translateX(0);
+    }
+    #sidebar-toggle {
+      display: inline-block;
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      background: #1d4ed8;
+      color: #f9fafb;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+  }
+</style>
+<script>
+  function toggleSidebar(){
+    document.body.classList.toggle('show-sidebar');
+  }
+</script>
+
+</head>
+<body>
+<button id="sidebar-toggle" onclick="toggleSidebar()">☰ Menú</button>
+<div id="sidebar">
+<div class="brand">Plataformas Virtuales</div>
+<h2>Inicio</h2>
+<a href="../index.html" class="">Inicio del curso</a>
+<h2>Sesión 1</h2>
+<a href="WEB1,2,3,4.html" class="">Web 1.0–4.0</a>
+<a href="A2EjemplosWEB.html" class="">A2 Ejemplos Web</a>
+<a href="integrado web1,2,3,4.html" class="current">Integrado Web 1–4</a>
+<a href="Herramientas_PVE.html" class="">Herramientas PVE</a>
+<a href="PVE_Tipos.html" class="">Tipos de PVE</a>
+<a href="Elección_PVE.html" class="">Elección de PVE</a>
+<a href="Estándares.html" class="">Estándares</a>
+<a href="A3Ejemplo_PVE.html" class="">A3 Ejemplo PVE</a>
+<a href="Línea_tiempo_PVE.html" class="">Línea de tiempo PVE</a>
+<a href="A4_reflexion_nube.html" class="">A4 Reflexión nube</a>
+<a href="Funcion_profesor.html" class="">Función profesor</a>
+<a href="Funcion_estudiante.html" class="">Función estudiante</a>
+<a href="A5_reflexion_infografia.html" class="">A5 Infografía</a>
+<a href="A6_Identificación_curso.html" class="">A6 Identificación curso</a>
+<h2>Sesión 2</h2>
+<a href="../sesion2/EVA_intro.html" class="">EVA Introducción</a>
+<a href="../sesion2/DI_intro1.html" class="">DI Parte 1</a>
+<a href="../sesion2/DI_intro2_clasification.html" class="">DI Parte 2</a>
+<a href="../sesion2/A7_elabora_DI.html" class="">A7 Elaborar DI</a>
+<a href="../sesion2/A8_DI_integrados.html" class="">A8 DI integrados</a>
+<a href="../sesion2/A9_Desarrollo_curso.html" class="">A9 Desarrollo curso</a>
+<a href="../sesion2/ADDIE.html" class="">ADDIE interactivo</a>
+</div>
+
+
+<header>
+    <h1 class="hero-title">Web 1.0 → 4.0</h1>
+    <p class="hero-subtitle">De la web estática a la inteligencia simbiótica<br>y el origen real de las plataformas educativas</p>
+    <div class="scroll-hint">↓</div>
+</header>
+
+<div class="container">
+    <section class="timeline">
+
+        <div class="timeline-item web1">
+            <div class="timeline-year" data-label="Web 1.0 - La web estática">1990<br><span style="font-size:1.1rem;">Web 1.0</span></div>
+            <div class="timeline-content left">
+                <h2>Web 1.0 – La web estática y de solo lectura</h2>
+                <p><strong>Año de aparición:</strong> ~1990</p>
+                <p>Primera versión de la web. Páginas estáticas, hipertexto básico, solo lectura. El usuario es un receptor pasivo. El contenido lo controla totalmente el webmaster.</p>
+                <ul>
+                    <li>Solo consumo de información</li>
+                    <li>Centralizada y secuencial</li>
+                    <li>Tecnologías: HTML básico, GIF animados, frames</li>
+                    <li>Ejemplos: Geocities, Yahoo! Directory, portales informativos</li>
+                </ul>
+                <p><em>Küster & Hernández (2013); Latorre (2018); Argüelles Toache (2022)</em></p>
+            </div>
+        </div>
+
+        <div class="timeline-item web2">
+            <div class="timeline-year" data-label="Web 2.0 - La web social">2004<br><span style="font-size:1.1rem;">Web 2.0</span></div>
+            <div class="timeline-content right">
+                <h2>Web 2.0 – La web social y colaborativa</h2>
+                <p><strong>Término acuñado por:</strong> Tim O’Reilly (2004)</p>
+                <p>El usuario pasa de consumidor a creador (prosumidor). Nace la web participativa.</p>
+                <ul>
+                    <li>Redes sociales, blogs, wikis, YouTube</li>
+                    <li>Interacción bidireccional</li>
+                    <li>Tecnologías: AJAX, RSS, APIs</li>
+                    <li>Ejemplos: Facebook, Wikipedia, Twitter</li>
+                </ul>
+                <p><em>O’Reilly (2004); Latorre (2018); Argüelles Toache (2022)</em></p>
+            </div>
+        </div>
+
+        <div class="timeline-item web3">
+            <div class="timeline-year" data-label="Web 3.0 - Web semántica">2010<br><span style="font-size:1.1rem;">Web 3.0</span></div>
+            <div class="timeline-content left">
+                <h2>Web 3.0 – La web semántica e inteligente</h2>
+                <p>La web entiende el significado de los datos y los personaliza.</p>
+                <ul>
+                    <li>Web semántica + Big Data + IA</li>
+                    <li>Personalización profunda</li>
+                    <li>Descentralización (blockchain)</li>
+                    <li>Ejemplos: Siri, recomendaciones, Ethereum</li>
+                </ul>
+                <p><em>Ramírez León & Peña Arcila (2011); Argüelles Toache (2022)</em></p>
+            </div>
+        </div>
+
+        <div class="timeline-item web4">
+            <div class="timeline-year" data-label="Web 4.0 - Simbiótica">2016→<br><span style="font-size:1.1rem;">Web 4.0</span></div>
+            <div class="timeline-content right">
+                <h2>Web 4.0 – La web simbiótica y omnipresente</h2>
+                <p>Fusión total entre humano y máquina. La web anticipa y actúa por nosotros.</p>
+                <ul>
+                    <li>IA avanzada (Deep Learning)</li>
+                    <li>IoT, 5G/6G, realidad extendida</li>
+                    <li>Agentes inteligentes siempre activos</li>
+                    <li>Ejemplos: Metaverso, ciudades inteligentes</li>
+                </ul>
+                <p><em>Latorre (2018); Argüelles Toache (2022)</em></p>
+            </div>
+        </div>
+    </section>
+
+    <section class="lms-section">
+        <h2 class="section-title">Evolución de las Plataformas Educativas (LMS)</h2>
+        <div class="lms-grid">
+            <div class="lms-card" onclick="this.classList.toggle('active')">
+                <div class="lms-header" style="background:var(--web1)">Web 1.0 (1995–2000)</div>
+                <div class="lms-body">
+                    <strong>Nacimiento real del LMS</strong><br><br>
+                    • WebCT (1995), Mallard, CyberProf<br>
+                    • CourseInfo (pre-Blackboard)<br>
+                    • WOLF<br><br>
+                    <em>Profesor-céntricas, contenido estático</em>
+                </div>
+            </div>
+            <div class="lms-card" onclick="this.classList.toggle('active')">
+                <div class="lms-header" style="background:var(--web2)">Web 2.0 (2002–2012)</div>
+                <div class="lms-body">
+                    <strong>El LMS moderno y colaborativo</strong><br><br>
+                    • Moodle (2002)<br>• Sakai, Blackboard avanzado<br>• Edmodo, Schoology<br><br>
+                    <em>Wikis, blogs, e-learning 2.0</em>
+                </div>
+            </div>
+            <div class="lms-card" onclick="this.classList.toggle('active')">
+                <div class="lms-header" style="background:var(--web3)">Web 3.0 (2015→)</div>
+                <div class="lms-body">
+                    <strong>Inteligencia y personalización</strong><br><br>
+                    • Learning Analytics<br>• Rutas adaptativas<br>• Plugins IA<br>• Credenciales blockchain
+                </div>
+            </div>
+            <div class="lms-card" onclick="this.classList.toggle('active')">
+                <div class="lms-header" style="background:var(--web4)">Web 4.0 (futuro)</div>
+                <div class="lms-body">
+                    <strong>Educación inmersiva</strong><br><br>
+                    • Clases en metaverso<br>• VR/AR conectada<br>• Asistentes IA permanentes<br>• IoT en aula física
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<footer>
+    Dr. Kristian Armando Pineda Castillo | UPES Culiacán | Noviembre 2025<br><br>
+    Referencias: Küster & Hernández (2013), Latorre (2018), O’Reilly (2004), Argüelles Toache (2022), Wikipedia, ResearchGate.
+</footer>
+
+<script>
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('.timeline-content').forEach((item, i) => {
+        gsap.to(item, {
+            scrollTrigger: { trigger: item, start: "top 80%", toggleActions: "play none none reverse" },
+            opacity: 1, y: 0, duration: 1.2, ease: "power3.out", delay: i * 0.3
+        });
+    });
+</script>
+<div class="nav-buttons">
+<a href="A2EjemplosWEB.html">⬅ Anterior</a>
+<a href="../index.html" class="secondary">Inicio</a>
+<a href="Herramientas_PVE.html">Siguiente ➜</a>
+</div>
+</body>
+</html>

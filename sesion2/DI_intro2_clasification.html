@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Red Completa y Detallada de Modelos de Diseño Instruccional</title>
+<script src="https://unpkg.com/jsplumb@2.15.6/dist/js/jsplumb.min.js"></script>
+<script src="https://unpkg.com/panzoom@9.4.3/dist/panzoom.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&family=Exo+2:wght@300;500&display=swap" rel="stylesheet">
+<style>
+  body,html{margin:0;padding:0;height:100%;overflow:hidden;background:#000;background:radial-gradient(circle at 30% 70%,#110033,#000000);color:#ccc;font-family:'Exo 2',sans-serif;}
+  #map{position:absolute;inset:0;}
+  .node{
+    position:absolute;width:240px;padding:14px 18px;border-radius:16px;
+    background:rgba(10,5,40,0.92);border:2px solid;
+    box-shadow:0 0 30px rgba(0,255,255,0.4);
+    color:white;cursor:move;user-select:none;
+    backdrop-filter:blur(10px);transition:all .3s;
+  }
+  .node:hover{transform:scale(1.07);z-index:999;box-shadow:0 0 60px currentColor;}
+  .node h3{margin:0 0 10px;font-family:'Orbitron',sans-serif;font-size:1.2rem;text-align:center;}
+  .node ul{margin:8px 0 0;padding-left:18px;font-size:0.88rem;line-height:1.4;}
+  .node li{margin:4px 0;}
+  .central{width:340px;padding:20px;font-size:1.5rem;background:linear-gradient(135deg,#1a0044,#000);border-color:#ff00ff;box-shadow:0 0 100px #ff00ff;}
+  .cat1{border-color:#00ffff;color:#00ffff;}   /* Definiciones */
+  .cat2{border-color:#00ff80;color:#00ff80;}   /* ADDIE */
+  .cat3{border-color:#ff00ff;color:#ff00ff;}   /* Clásicos */
+  .cat4{border-color:#ffff00;color:#ffff00;}   /* Por propósito */
+  .cat5{border-color:#ff6b00;color:#ff6b00;}   /* Por estructura */
+  .cat6{border-color:#00d4ff;color:#00d4ff;}   /* Lineales COM */
+  .cat7{border-color:#ff2e63;color:#ff2e63;}   /* Flexibles / Híbridos */
+</style>
+
+<style>
+  body {
+    margin: 0;
+    padding-left: 260px;
+  }
+  #sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 250px;
+    background: #020617;
+    color: #e5e7eb;
+    padding: 18px 16px;
+    box-shadow: 4px 0 12px rgba(0,0,0,0.55);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    overflow-y: auto;
+    z-index: 999;
+  }
+  #sidebar .brand {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #fbbf24;
+  }
+  #sidebar h2 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #93c5fd;
+    margin: 12px 0 4px;
+  }
+  #sidebar a {
+    display: block;
+    padding: 6px 9px;
+    margin: 2px 0;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #e5e7eb;
+    font-size: 0.86rem;
+  }
+  #sidebar a:hover {
+    background: #1f2937;
+    color: #93c5fd;
+  }
+  #sidebar a.current {
+    background: #1d4ed8;
+    color: #e5e7eb;
+  }
+
+  #sidebar-toggle {
+    display: none;
+  }
+
+  .nav-buttons {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .nav-buttons a {
+    padding: 8px 14px;
+    border-radius: 999px;
+    text-decoration: none;
+    background: #1d4ed8;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .nav-buttons a.secondary {
+    background: #4b5563;
+  }
+  .nav-buttons a:hover {
+    filter: brightness(1.1);
+  }
+
+  @media (max-width: 900px) {
+    body {
+      padding-left: 0;
+    }
+    #sidebar {
+      width: 220px;
+      transform: translateX(-100%);
+      transition: transform .3s ease-in-out;
+    }
+    body.show-sidebar #sidebar {
+      transform: translateX(0);
+    }
+    #sidebar-toggle {
+      display: inline-block;
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      background: #1d4ed8;
+      color: #f9fafb;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+  }
+</style>
+<script>
+  function toggleSidebar(){
+    document.body.classList.toggle('show-sidebar');
+  }
+</script>
+
+</head>
+<body>
+<button id="sidebar-toggle" onclick="toggleSidebar()">☰ Menú</button>
+<div id="sidebar">
+<div class="brand">Plataformas Virtuales</div>
+<h2>Inicio</h2>
+<a href="../index.html" class="">Inicio del curso</a>
+<h2>Sesión 1</h2>
+<a href="../sesion1/WEB1,2,3,4.html" class="">Web 1.0–4.0</a>
+<a href="../sesion1/A2EjemplosWEB.html" class="">A2 Ejemplos Web</a>
+<a href="../sesion1/integrado web1,2,3,4.html" class="">Integrado Web 1–4</a>
+<a href="../sesion1/Herramientas_PVE.html" class="">Herramientas PVE</a>
+<a href="../sesion1/PVE_Tipos.html" class="">Tipos de PVE</a>
+<a href="../sesion1/Elección_PVE.html" class="">Elección de PVE</a>
+<a href="../sesion1/Estándares.html" class="">Estándares</a>
+<a href="../sesion1/A3Ejemplo_PVE.html" class="">A3 Ejemplo PVE</a>
+<a href="../sesion1/Línea_tiempo_PVE.html" class="">Línea de tiempo PVE</a>
+<a href="../sesion1/A4_reflexion_nube.html" class="">A4 Reflexión nube</a>
+<a href="../sesion1/Funcion_profesor.html" class="">Función profesor</a>
+<a href="../sesion1/Funcion_estudiante.html" class="">Función estudiante</a>
+<a href="../sesion1/A5_reflexion_infografia.html" class="">A5 Infografía</a>
+<a href="../sesion1/A6_Identificación_curso.html" class="">A6 Identificación curso</a>
+<h2>Sesión 2</h2>
+<a href="EVA_intro.html" class="">EVA Introducción</a>
+<a href="DI_intro1.html" class="">DI Parte 1</a>
+<a href="DI_intro2_clasification.html" class="current">DI Parte 2</a>
+<a href="A7_elabora_DI.html" class="">A7 Elaborar DI</a>
+<a href="A8_DI_integrados.html" class="">A8 DI integrados</a>
+<a href="A9_Desarrollo_curso.html" class="">A9 Desarrollo curso</a>
+<a href="ADDIE.html" class="">ADDIE interactivo</a>
+</div>
+
+
+<div id="map"></div>
+
+<script>
+// === TODOS LOS NODOS (más de 50) ===
+const nodes = [
+  {id:"central",  x:50, y:50, w:340, cat:"central", html:`<h3>MODELOS DE DISEÑO INSTRUCCIONAL</h3><p>Mapa completo 2025 – 50+ modelos</p>`},
+
+  // 1. Definición
+  {id:"def",     x:8,  y:8,  cat:"cat1", html:`<h3>1. Definición de DI</h3><ul><li>Gustafson & Branch → Procedimental</li><li>Şimşek → Sistemas de aprendizaje</li><li>Branch → Complejo e integrado</li></ul>`},
+  
+  // 2. ADDIE (detallado)
+  {id:"addie",   x:75, y:10, cat:"cat2", html:`<h3>2. Modelo ADDIE</h3><ul><li>Análisis (alumno, contexto, metas)</li><li>Diseño (objetivos, medios)</li><li>Desarrollo (contenidos)</li><li>Implementación</li><li>Evaluación (formativa + sumativa)</li></ul><p><strong>Modelo madre</strong></p>`},
+  {id:"a1", x:70, y:3,  cat:"cat2", html:`<h3>Análisis</h3><small>Conocimientos previos, actitudes, cultura, intereses</small>`},
+  {id:"a2", x:78, y:3,  cat:"cat2", html:`<h3>Diseño</h3><small>Objetivos, métodos, actividades, medios</small>`},
+  {id:"a3", x:74, y:18, cat:"cat2", html:`<h3>Desarrollo</h3><small>Prototipos, materiales, evaluación</small>`},
+
+  // 3. Clasificación por propósito (Gustafson & Branch)
+  {id:"gb",      x:8,  y:30, cat:"cat4", html:`<h3>4. Por Propósito (Gustafson & Branch)</h3>`},
+  {id:"com",     x:3,  y:40, cat:"cat4", html:`<h3>COM<br>Clase/Aula</h3><small>Profesor individual<br>Poca tecnología</small>`},
+  {id:"pom",     x:12, y:40, cat:"cat4", html:`<h3>POM<br>Producto</h3><small>Equipo multidisciplinar<br>Curso multimedia, software</small>`},
+  {id:"som",     x:8,  y:50, cat:"cat4", html:`<h3>SOM<br>Sistema</h3><small>Currículos completos<br>Diseñadores profesionales</small>`},
+
+  // 4. Clasificación por estructura (Şimşek)
+  {id:"simsek",  x:75, y:35, cat:"cat5", html:`<h3>5. Por Estructura (Şimşek 2013)</h3>`},
+  {id:"core",    x:70, y:45, cat:"cat5", html:`<h3>Core</h3><small>Proceso global invariable</small>`},
+  {id:"linear",  x:80, y:45, cat:"cat5", html:`<h3>Linear</h3><small>Paso a paso</small>`},
+  {id:"flex",    x:75, y:55, cat:"cat5", html:`<h3>Flexible</h3><small>Espiral / no secuencial</small>`},
+  {id:"comm",    x:85, y:55, cat:"cat5", html:`<h3>Communicative</h3><small>Retroalimentación constante</small>`},
+  {id:"heur",    x:80, y:65, cat:"cat5", html:`<h3>Heuristic</h3><small>Máxima libertad</small>`},
+  {id:"hybrid",  x:70, y:65, cat:"cat5", html:`<h3>Hybrid</h3><small>Combinación</small>`},
+
+  // Modelos Clásicos
+  {id:"clas", x:45, y:8, cat:"cat3", html:`<h3>Modelos Clásicos</h3>`},
+  {id:"dick", x:38, y:15, cat:"cat3", html:`<h3>Dick & Carey</h3><small>10 pasos lineales</small>`},
+  {id:"kemp", x:52, y:15, cat:"cat3", html:`<h3>Kemp, Morrison & Ross</h3><small>9 elementos circulares</small>`},
+  {id:"4cid", x:45, y:20, cat:"cat3", html:`<h3>4C/ID<br>Van Merriënboer</h3><small>Tareas auténticas + apoyo</small>`},
+  {id:"rapid",x:55, y:20, cat:"cat3", html:`<h3>Rapid Prototyping</h3><small>Prototipos sucesivos</small>`},
+
+  // Lineales COM (aula)
+  {id:"lcom", x:15, y:65, cat:"cat6", html:`<h3>Lineales COM (Aula)</h3>`},
+  {id:"assure",x:8,  y:72, cat:"cat6", html:`<h3>ASSURE</h3><small>Analyze → State → Select → Utilize → Require → Evaluate</small>`},
+  {id:"5e",    x:15, y:72, cat:"cat6", html:`<h3>5E</h3><small>Engage-Explore-Explain-Elaborate-Evaluate</small>`},
+  {id:"tpack", x:22, y:72, cat:"cat6", html:`<h3>TPACK-IDDIRR</h3><small>Formación docente</small>`},
+
+  // Flexibles & Híbridos
+  {id:"flexh", x:60, y:75, cat:"cat7", html:`<h3>Flexibles + Híbridos</h3>`},
+  {id:"penta", x:55, y:82, cat:"cat7", html:`<h3>PENTHA ID</h3><small>Personalization-Environment-Network-Tutoring-Hypermedia-Activity</small>`},
+  {id:"fidge", x:65, y:82, cat:"cat7", html:`<h3>FIDGE</h3><small>Juegos serios</small>`},
+  {id:"wiscom",x:60, y:88, cat:"cat7", html:`<h3>WisCom</h3><small>Comunidades de sabiduría</small>`},
+  {id:"slid",  x:70, y:88, cat:"cat7", html:`<h3>SLID</h3><small>Laboratorios de ciencias</small>`},
+
+  // Más modelos recientes (muestra)
+  {id:"otros", x:35, y:85, cat:"cat7", html:`<h3>Recientes / Especializados</h3><ul><li>MI-MathS • SMID • ILC-CMAS</li><li>IDEA • MCinEDP • E-Seneca</li><li>MIDLO • 5C Model • SWLing</li></ul>`}
+];
+
+// === CREAR NODOS ===
+nodes.forEach(n => {
+  const div = document.createElement("div");
+  div.className = "node " + n.cat;
+  div.id = n.id;
+  div.innerHTML = n.html;
+  div.style.left = n.x + "%";
+  div.style.top  = n.y + "%";
+  if(n.w) div.style.width = n.w + "px";
+  document.getElementById("map").appendChild(div);
+});
+
+// === JSPLUMB ===
+jsPlumb.ready(() => {
+  const conn = {
+    paintStyle:{stroke:"#00ffff",strokeWidth:2},
+    endpoint:["Dot",{radius:6}],
+    connector:["Bezier",{curviness:100}],
+    overlays:[["Arrow",{location:1,width:10,length:10}]],
+    endpointStyle:{fill:"#ff00ff"}
+  };
+
+  // Desde el centro
+  ["def","addie","gb","simsek","clas","lcom","flexh","otros"].forEach(t => 
+    jsPlumb.connect({source:"central", target:t, ...conn})
+  );
+
+  // ADDIE detallado
+  jsPlumb.connect({source:"addie", target:"a1", ...conn});
+  jsPlumb.connect({source:"addie", target:"a2", ...conn});
+  jsPlumb.connect({source:"addie", target:"a3", ...conn});
+
+  // Gustafson & Branch
+  ["com","pom","som"].forEach(t => jsPlumb.connect({source:"gb", target:t, ...conn}));
+
+  // Şimşek
+  ["core","linear","flex","comm","heur","hybrid"].forEach(t => 
+    jsPlumb.connect({source:"simsek", target:t, ...conn})
+  );
+
+  // Clásicos
+  ["dick","kemp","4cid","rapid"].forEach(t => 
+    jsPlumb.connect({source:"clas", target:t, ...conn})
+  );
+
+  // Lineales COM
+  ["assure","5e","tpack"].forEach(t => 
+    jsPlumb.connect({source:"lcom", target:t, ...conn})
+  );
+
+  // Flexibles & híbridos
+  ["penta","fidge","wiscom","slid"].forEach(t => 
+    jsPlumb.connect({source:"flexh", target:t, ...conn})
+  );
+
+  // Hacer todo arrastrable
+  jsPlumb.draggable(jsPlumb.getSelector(".node"));
+});
+
+// === ZOOM + PAN ILIMITADO ===
+panzoom(document.getElementById('map'), {
+  maxZoom: 3,
+  minZoom: 0.3,
+  smoothScroll: false
+});
+</script>
+
+<div class="nav-buttons">
+<a href="DI_intro1.html">⬅ Anterior</a>
+<a href="../index.html" class="secondary">Inicio</a>
+<a href="A7_elabora_DI.html">Siguiente ➜</a>
+</div>
+</body>
+</html>
